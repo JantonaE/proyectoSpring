@@ -1,8 +1,12 @@
 package es.grupo2.proyectospring.controller;
 
 import es.grupo2.proyectospring.dto.ListaDTO;
+import es.grupo2.proyectospring.dto.UsuarioDTO;
+import es.grupo2.proyectospring.entity.ListaUsuarios;
 import es.grupo2.proyectospring.entity.Mensaje;
+import es.grupo2.proyectospring.entity.Usuario;
 import es.grupo2.proyectospring.entity.VistaMensaje;
+import es.grupo2.proyectospring.repository.ListaUsuariosRepository;
 import es.grupo2.proyectospring.repository.MensajeRepository;
 import es.grupo2.proyectospring.repository.VistaMensajeRepository;
 import es.grupo2.proyectospring.service.ListaService;
@@ -21,16 +25,17 @@ import java.util.List;
 @Controller
 public class ControllerMensajes {
     private UsuarioService usuarioService;
-    private VistaMensajeRepository vistaMensajeRepository;
+    //private VistaMensajeRepository vistaMensajeRepository;
     private MensajeRepository mensajeRepository;
+    private ListaUsuariosRepository listaUsuariosRepository;
     private ListaService listaService;
     private MensajeService mensajeService;
-/*
+
     @Autowired
-    public void setMensajeService(MensajeService mensajeService) {
-        this.mensajeService = mensajeService;
+    public void setListaUsuariosRepository(ListaUsuariosRepository listaUsuariosRepository) {
+        this.listaUsuariosRepository = listaUsuariosRepository;
     }
-*/
+
     @Autowired
     public void setListaService(ListaService listaService) {
         this.listaService = listaService;
@@ -46,10 +51,13 @@ public class ControllerMensajes {
     public void setUsuarioService(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
+
+
     @Autowired
-    public void setVistaMensajeRepository(VistaMensajeRepository vistaMensajeRepository) {
-        this.vistaMensajeRepository = vistaMensajeRepository;
+    public void setMensajeService(MensajeService mensajeService) {
+        this.mensajeService = mensajeService;
     }
+
 
     @RequestMapping ("/bandeja/{id}")
     public String showBandeja(@PathVariable("id") int idUsuario, Model model){
@@ -61,20 +69,26 @@ public class ControllerMensajes {
 
     @RequestMapping("/marketing/mensaje/{id}")
     public String initCreadorMensaje(Model model, @PathVariable("id") int idLista){
+        System.out.println("El id llega:"+idLista);
         ListaDTO lista = this.listaService.buscarLista(idLista);
+        System.out.println("El lista:"+lista.getDescripcion());
         model.addAttribute("lista",lista);
 
-        return "redirect:/CreadorMensajes/";
+        return "CreadorMensajes";
 
     }
 
     @PostMapping("/marketing/enviar")
-    public String enviarMensaje(Model model, @RequestParam("listaId") int idLista,
+    public String enviarMensaje(Model model, @RequestParam("listaId") int idLista,@RequestParam("emisor") int idEmisor,
                                 @RequestParam("titulo") String titulo,@RequestParam("contenido") String contenido){
-        ListaDTO lista = this.listaService.buscarLista(idLista);
-        //this.mensajeService.
+        //ListaDTO lista = this.listaService.buscarLista(idLista);
+        List<ListaUsuarios> lu = this.listaUsuariosRepository.findListaUsuariosByIDlista(idLista);
+        //List<UsuarioDTO> lu= lista.getUsuarioList();
+        for(ListaUsuarios u : lu){
+            this.mensajeService.crearMensaje(u.getUsuarioId(),idEmisor,titulo,contenido,"0");
+        }
 
-        return "redirect:/CreadorMensajes/";
+        return "redirect:/marketing";
 
     }
 

@@ -55,19 +55,19 @@ public class UsuarioService {
     }
 
 
-    public List<UsuarioDTO> findByEdadMinMax(String min,String max) {
+    public List<UsuarioDTO> findByEdadMinMax(int min,int max) {
         List<UsuarioDTO> listaDTO =
-                usuarioEntityADTO(this.usuarioRepository.findByEdadMinMax(Integer.parseInt(min), Integer.parseInt(max)));
+                usuarioEntityADTO(this.usuarioRepository.findByEdadMinMax(min, max));
         return listaDTO;
     }
 
-    public List<UsuarioDTO> findByEdadMin(String min) {
-        List<UsuarioDTO> listaDTO = usuarioEntityADTO(this.usuarioRepository.findByEdadMin(Integer.parseInt(min)));
+    public List<UsuarioDTO> findByEdadMin(int min) {
+        List<UsuarioDTO> listaDTO = usuarioEntityADTO(this.usuarioRepository.findByEdadMin(min));
         return listaDTO;
     }
 
-    public List<UsuarioDTO> findByEdadMax(String max) {
-        List<UsuarioDTO> listaDTO = usuarioEntityADTO(this.usuarioRepository.findByEdadMax(Integer.parseInt(max)));
+    public List<UsuarioDTO> findByEdadMax(int max) {
+        List<UsuarioDTO> listaDTO = usuarioEntityADTO(this.usuarioRepository.findByEdadMax(max));
         return listaDTO;
     }
 
@@ -122,6 +122,7 @@ public class UsuarioService {
 
         this.usuarioRepository.save(u);
     }
+
 
 
 }

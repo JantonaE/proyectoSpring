@@ -4,7 +4,9 @@ import es.grupo2.proyectospring.dto.MensajeDTO;
 import es.grupo2.proyectospring.entity.Mensaje;
 import es.grupo2.proyectospring.repository.MensajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MensajeService {
     private MensajeRepository mensajeRepository;
 

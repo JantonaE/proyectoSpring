@@ -22,6 +22,7 @@
         <td>ID MARKETING</td>
         <td></td>
         <td></td>
+        <td></td>
     </tr>
     <tr>
             <%
@@ -32,6 +33,7 @@
         <td><%= lu.getIdLista() %></td>
         <td><%= lu.getDescripcion() %></td>
         <td><%= lu.getMarketingId() %></td>
+        <td><a href="/marketing/editar/<%= lu.getIdLista() %>">Editar</a></td></td>
         <td><a href="/marketing/borrar/<%= lu.getIdLista() %>">Borrar</a></td>
         <td><a href="/marketing/mensaje/<%= lu.getIdLista() %>">Enviar Mensaje</a></td>
     </tr>
@@ -43,7 +45,7 @@
 <br>
 <form:form action="/marketing/crear" method="post">
     <input type="hidden" name="marketingId" value="<%= lista.get(0).getMarketingId() %>">
-    <input type="text" name="descripcion" size="30">
+    Descripción: <input type="text" name="descripcion" size="30"> <br>
     <input type="submit"  value="Crear Lista"></form:form>
 
 <a href="index.html">Volver</a>

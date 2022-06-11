@@ -1,10 +1,13 @@
 package es.grupo2.proyectospring.service;
 
 import es.grupo2.proyectospring.dto.ListaDTO;
+import es.grupo2.proyectospring.dto.UsuarioDTO;
 import es.grupo2.proyectospring.entity.Lista;
+import es.grupo2.proyectospring.entity.ListaUsuarios;
 import es.grupo2.proyectospring.entity.Marketing;
 import es.grupo2.proyectospring.entity.Usuario;
 import es.grupo2.proyectospring.repository.ListaRepository;
+import es.grupo2.proyectospring.repository.ListaUsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,11 @@ public class ListaService {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     private ListaRepository listaRepository;
+    private ListaUsuariosRepository listaUsuariosRepository;
+    @Autowired
+    public void setListaUsuariosRepository(ListaUsuariosRepository listaUsuariosRepository) {
+        this.listaUsuariosRepository = listaUsuariosRepository;
+    }
 
     @Autowired
     public void setListaRepository(ListaRepository listaRepository) {
@@ -53,7 +61,7 @@ public class ListaService {
 
 
     private void rellenarLista (Lista lista, String descripcion, Marketing marketing,
-                                List<Usuario> usuarioList) {
+                                List<UsuarioDTO> usuarioList) {
         lista.setDescripcion(descripcion);
         lista.setIdLista(lista.getIdLista());
         lista.setMarketingId(marketing.getUsuarioId());
@@ -64,13 +72,13 @@ public class ListaService {
                             List<Usuario> usuarioList) {
         Lista lista = new Lista();
 
-        this.rellenarLista(lista,descripcion,marketing,usuarioList);
+        //this.rellenarLista(lista,descripcion,marketing,usuarioList);
 
         this.listaRepository.save(lista);
     }
 
-    public void modificarLista (long id,String descripcion,Marketing marketing,
-                                List<Usuario> usuarioList) {
+    public void modificarLista (long id, String descripcion, Marketing marketing,
+                                List<UsuarioDTO> usuarioList) {
         Lista lista = this.listaRepository.findById((int) id).orElse(null);
 
         this.rellenarLista(lista,descripcion,marketing,usuarioList);
@@ -78,5 +86,25 @@ public class ListaService {
         this.listaRepository.save(lista);
     }
 
+    private void rellenarListaUsuarios (List<ListaUsuarios> lista,
+                                List<UsuarioDTO> usuarioList) {
+        for(UsuarioDTO u : usuarioList){
+            ListaUsuarios lu = new ListaUsuarios();
+            lu.setListaId(lista.get(0).getListaId());
+            lu.setUsuarioId(Math.toIntExact(u.getId()));
+            this.listaUsuariosRepository.save(lu);
+        }
+    }
+
+    public void modificarListaUsuarios (long id,
+                                List<UsuarioDTO> usuarioList) {
+        List<ListaUsuarios> lista = this.listaUsuariosRepository.findListaUsuariosByIDlista((int) id);
+
+        this.rellenarListaUsuarios(lista,usuarioList);
+        for (ListaUsuarios l : lista){
+            this.listaUsuariosRepository.save(l);
+        }
+
+    }
 
 }

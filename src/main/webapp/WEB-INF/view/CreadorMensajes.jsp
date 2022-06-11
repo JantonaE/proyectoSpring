@@ -20,8 +20,11 @@
 <h1>Enviar Mensaje <%= lista.getIdLista() %></h1>
 <form:form action="/marketing/enviar" method="post">
     <input type="hidden" name="listaId" value="<%= lista.getIdLista() %>">
-    <input type="text" name="titulo" size="30">
-    <input type="text" name="contenido" size="90">
+    <input type="hidden" name="emisor" value="<%= lista.getMarketingId() %>">
+    Titulo: <input type="text" name="titulo" size="20">
+    <br>
+    Cuerpo: <input type="text" name="contenido" size="90">
+    <br>
     <input type="submit"  value="Mandar mensaje">
 </form:form>
 
