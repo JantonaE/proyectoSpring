@@ -1,5 +1,9 @@
 package es.grupo2.proyectospring.entity;
 
+import es.grupo2.proyectospring.repository.ListaVentaRepository;
+import es.grupo2.proyectospring.repository.VendedorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
