@@ -34,9 +34,9 @@
         %>
 
         <tr>
-            <td><%= lv.getVendedorId()%></td>
-            <td><%= lv.getProducto()%></td>
-            <td><%= lv.getCompradorId()%></td>
+            <td><%= lv.getVendedor().getUsuario().getNombre()%></td>
+            <td><%= lv.getProducto1().getTitulo()%></td>
+            <td><%= lv.getComprador().getUsuario().getNombre()%></td>
             <td><%= lv.getFecha()%></td>
             <td><%= lv.getPreciopuja()%></td>
         </tr>

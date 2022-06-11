@@ -30,6 +30,47 @@ public class ListaVenta {
     @Column(name = "preciopuja", nullable = false, precision = 0)
     private Double preciopuja;
 
+    @MapsId
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "vendedor_id", nullable = false)
+    private Vendedor vendedor;
+
+    @MapsId
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "producto", nullable = false)
+    private Producto producto1;
+
+
+    @MapsId
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "comprador_id", nullable = true)
+    private Comprador comprador;
+
+    public Producto getProducto1() {
+        return producto1;
+    }
+
+    public void setProducto1(Producto producto1) {
+        this.producto1 = producto1;
+    }
+
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
+    }
+
+
+    public Comprador getComprador() {
+        return comprador;
+    }
+
+    public void setComprador(Comprador comprador) {
+        this.comprador = comprador;
+    }
+
     public Integer getVendedorId() {
         return vendedorId;
     }

@@ -1,7 +1,9 @@
 package es.grupo2.proyectospring.entity;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Comprador {
@@ -12,6 +14,19 @@ public class Comprador {
     @Basic
     @Column(name = "categoria_preferida", nullable = true, length = 50)
     private String categoriaPreferida;
+
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public Integer getUsuarioId() {
         return usuarioId;

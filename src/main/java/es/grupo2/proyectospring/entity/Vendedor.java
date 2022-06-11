@@ -10,6 +10,19 @@ public class Vendedor {
     @Column(name = "usuario_id", nullable = false)
     private Integer usuarioId;
 
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public Integer getUsuarioId() {
         return usuarioId;
     }
