@@ -10,11 +10,11 @@ import java.util.Objects;
 public class FavoritosCompradorPK implements Serializable {
     @Column(name = "comprador_id", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer compradorId;
     @Column(name = "producto_id", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer productoId;
 
     public Integer getCompradorId() {

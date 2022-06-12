@@ -1,5 +1,7 @@
 package es.grupo2.proyectospring.entity;
 
+import es.grupo2.proyectospring.dto.CompradorDTO;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -42,6 +44,14 @@ public class Comprador {
 
     public void setCategoriaPreferida(String categoriaPreferida) {
         this.categoriaPreferida = categoriaPreferida;
+    }
+
+    public CompradorDTO toDTO(){
+        CompradorDTO c=new CompradorDTO();
+        c.setUsuario(getUsuario());
+        c.setUsuarioId(getUsuarioId());
+        c.setCategoriaPreferida(getCategoriaPreferida());
+        return c;
     }
 
     @Override
