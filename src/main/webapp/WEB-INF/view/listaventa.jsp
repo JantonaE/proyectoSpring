@@ -36,13 +36,29 @@
         <tr>
             <td><%= lv.getVendedor().getUsuario().getNombre()%></td>
             <td><%= lv.getProducto1().getTitulo()%></td>
+            <%
+                if(lv.getComprador()!= null){
+            %>
             <td><%= lv.getComprador().getUsuario().getNombre()%></td>
+
+            <%
+                }else{
+            %>
+            <td>Aun sin comprador</td>
+            <%
+                }
+            %>
             <td><%= lv.getFecha()%></td>
             <td><%= lv.getPreciopuja()%></td>
+            <td><a href="/vendedor/<%= lv.getVendedorId() %>/<%=lv.getProducto()%>/edit">editar</a> </td>
         </tr>
         <%
             }
         %>
     </table>
+
+
+    <a href="/vendedor/<%=listaVentaList.get(0).getVendedorId()%>/nuevo">CREAR NUEVA VENTA</a>
+
 
 </body>

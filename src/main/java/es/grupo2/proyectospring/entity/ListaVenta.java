@@ -1,11 +1,16 @@
 package es.grupo2.proyectospring.entity;
 
+import es.grupo2.proyectospring.dto.ListaDTO;
+import es.grupo2.proyectospring.dto.ListaVentaDTO;
+import es.grupo2.proyectospring.dto.UsuarioDTO;
 import es.grupo2.proyectospring.repository.ListaVentaRepository;
 import es.grupo2.proyectospring.repository.VendedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -122,5 +127,18 @@ public class ListaVenta {
     @Override
     public int hashCode() {
         return Objects.hash(vendedorId, producto, compradorId, fecha, preciopuja);
+    }
+
+    public ListaVentaDTO toDTO() {
+        ListaVentaDTO dto = new ListaVentaDTO();
+        dto.setCompradorId(getCompradorId());
+        dto.setFecha(getFecha());
+        dto.setComprador(getComprador());
+        dto.setPreciopuja(getPreciopuja());
+        dto.setProducto(getProducto());
+        dto.setVendedor(getVendedor());
+        dto.setProducto1(getProducto1());
+        dto.setVendedorId(getVendedorId());
+        return dto;
     }
 }

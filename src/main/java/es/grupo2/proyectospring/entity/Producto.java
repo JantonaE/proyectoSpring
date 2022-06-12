@@ -6,7 +6,9 @@ import es.grupo2.proyectospring.dto.VendedorDTO;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Producto {
@@ -29,6 +31,17 @@ public class Producto {
     @Basic
     @Column(name = "categoria_producto", nullable = false)
     private Integer categoriaProducto;
+
+    @OneToMany(mappedBy = "producto1")
+    private Set<ListaVenta> listaVentas = new LinkedHashSet<>();
+
+    public Set<ListaVenta> getListaVentas() {
+        return listaVentas;
+    }
+
+    public void setListaVentas(Set<ListaVenta> listaVentas) {
+        this.listaVentas = listaVentas;
+    }
 
     public Integer getId() {
         return id;

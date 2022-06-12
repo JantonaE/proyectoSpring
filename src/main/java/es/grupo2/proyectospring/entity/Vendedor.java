@@ -1,7 +1,9 @@
 package es.grupo2.proyectospring.entity;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Vendedor {
@@ -14,6 +16,17 @@ public class Vendedor {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "vendedor")
+    private Set<ListaVenta> listaVentas = new LinkedHashSet<>();
+
+    public Set<ListaVenta> getListaVentas() {
+        return listaVentas;
+    }
+
+    public void setListaVentas(Set<ListaVenta> listaVentas) {
+        this.listaVentas = listaVentas;
+    }
 
     public Usuario getUsuario() {
         return usuario;

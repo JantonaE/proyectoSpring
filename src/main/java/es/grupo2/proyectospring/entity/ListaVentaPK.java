@@ -1,5 +1,7 @@
 package es.grupo2.proyectospring.entity;
 
+import es.grupo2.proyectospring.dto.ListaVentaPKDTO;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,11 +12,9 @@ import java.util.Objects;
 public class ListaVentaPK implements Serializable {
     @Column(name = "vendedor_id", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer vendedorId;
     @Column(name = "producto", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer producto;
 
     public Integer getVendedorId() {
@@ -45,4 +45,13 @@ public class ListaVentaPK implements Serializable {
     public int hashCode() {
         return Objects.hash(vendedorId, producto);
     }
+
+    public ListaVentaPKDTO toDTO(){
+        ListaVentaPKDTO listaVentaPKDTO = null;
+        listaVentaPKDTO.setProducto(getProducto());
+        listaVentaPKDTO.setVendedorId(getVendedorId());
+
+        return listaVentaPKDTO;
+    }
+
 }

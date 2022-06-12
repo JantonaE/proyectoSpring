@@ -1,3 +1,5 @@
+<%@ page import="es.grupo2.proyectospring.dto.ListaVentaDTO" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: asalas
@@ -11,6 +13,17 @@
     <title>Añadir nuevo Producto a la venta</title>
 </head>
 <body>
+    <form:form action="/vendedor/guardar" method="post"  modelAttribute="listaVentaDTO">
+        <form:input path="vendedorId"/>
+        Producto:
+        <form:select path="producto">
+            <form:options items="${productos}" itemLabel="titulo" itemValue="id" />
+        </form:select>
+        Comprador: <form:input path="compradorId" />
+        PrecioPuja: <form:input path="preciopuja" />
+        Fecha: <form:input path="fecha" />
+        <form:button>Enviar</form:button>
+    </form:form>
 
 </body>
 </html>
