@@ -16,7 +16,7 @@
   <title>Datos Lista Compradores</title>
 </head>
 <%
-  String idLista = request.getParameter("id");
+  //String idLista = request.getParameter("id");
   List<UsuarioDTO> listaU = (List<UsuarioDTO>) request.getAttribute("usuarios");
   ListaDTO lista = (ListaDTO)request.getAttribute("lista");
 
@@ -34,6 +34,7 @@
     <td>CIUDAD</td>
     <td>EDAD</td>
     <td>SEXO</td>
+    <td></td>
   </tr>
   <tr>
       <%
@@ -46,6 +47,7 @@
     <td><%= u.getCiudad() %></td>
     <td><%= u.getEdad() %></td>
     <td><%= u.getSexo() %></td>
+    <td><a href="/marketing/UsuarioListaBorrar/<%= lista.getIdLista() %>/ <%= u.getId() %>">Borrar</a> </td>
   </tr>
   <%
     }

@@ -69,10 +69,10 @@ public class ListaService {
     }
 
     public void crearLista (String descripcion,Marketing marketing,
-                            List<Usuario> usuarioList) {
+                            List<UsuarioDTO> usuarioList) {
         Lista lista = new Lista();
 
-        //this.rellenarLista(lista,descripcion,marketing,usuarioList);
+        this.rellenarLista(lista,descripcion,marketing,usuarioList);
 
         this.listaRepository.save(lista);
     }

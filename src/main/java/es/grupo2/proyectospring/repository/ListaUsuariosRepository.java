@@ -12,4 +12,7 @@ public interface ListaUsuariosRepository extends JpaRepository<ListaUsuarios, In
 
     @Query ("select l from ListaUsuarios l where l.listaId = :idlista")
     public List<ListaUsuarios> findListaUsuariosByIDlista(int idlista);
+
+    @Query ("select l from ListaUsuarios l where l.listaId = :idlista and l.usuarioId = :idUsuario")
+    public ListaUsuarios findLista_Usuario(int idlista,int idUsuario);
 }

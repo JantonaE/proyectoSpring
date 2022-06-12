@@ -10,11 +10,11 @@ import java.util.Objects;
 public class ListaUsuariosPK implements Serializable {
     @Column(name = "usuario_id", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer usuarioId;
     @Column(name = "lista_id", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer listaId;
 
     public Integer getUsuarioId() {

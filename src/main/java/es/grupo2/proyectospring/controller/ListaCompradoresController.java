@@ -9,6 +9,7 @@ import es.grupo2.proyectospring.entity.Usuario;
 import es.grupo2.proyectospring.repository.ListaUsuariosRepository;
 import es.grupo2.proyectospring.repository.MarketingRepository;
 import es.grupo2.proyectospring.service.ListaService;
+import es.grupo2.proyectospring.service.ListaUsuariosService;
 import es.grupo2.proyectospring.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -26,6 +27,12 @@ public class ListaCompradoresController {
     private ListaService listaService;
     private MarketingRepository marketingRepository;
     private ListaUsuariosRepository listaUsuariosRepository;
+    private ListaUsuariosService listaUsuariosService;
+
+    @Autowired
+    public void setListaUsuariosService(ListaUsuariosService listaUsuariosService) {
+        this.listaUsuariosService = listaUsuariosService;
+    }
 
     @Autowired
     public void setListaUsuariosRepository(ListaUsuariosRepository listaUsuariosRepository) {
@@ -100,10 +107,9 @@ public class ListaCompradoresController {
     public String addUsuariosListaCompradores(Model model, @RequestParam(value = "idLista") int idLista,@RequestParam(value = "ciudad",required = false) String ciudad,
                                               @RequestParam(value = "sexo",required = false) String sexo,@RequestParam(value = "edadMin",required = false) String edadMin,
                                               @RequestParam(value = "edadMax",required = false) String edadMax){
-        //ListaDTO listaDTO = this.listaService.buscarLista(idLista);
         List<ListaUsuarios> lista = this.listaUsuariosRepository.findListaUsuariosByIDlista(idLista);
         List<UsuarioDTO> listaU = null;
-        System.out.println("llega"+edadMax);
+
         if(!"".equals(sexo) || sexo == null){
             listaU = this.usuarioService.findBySexo(sexo);
         }
@@ -115,7 +121,7 @@ public class ListaCompradoresController {
                 listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
             }
         }
-        if((!"".equals(edadMin) && !"".equals(edadMax))||(edadMax == "" && edadMin == "") ){
+        if((!"".equals(edadMin) && !"".equals(edadMax))){ //||(edadMax == "" && edadMin == ""
             if(listaU == null || !listaU.isEmpty()){
                 listaU = this.usuarioService.findByEdadMinMax(Integer.parseInt(edadMin), Integer.parseInt(edadMax));
             }else{
@@ -123,7 +129,7 @@ public class ListaCompradoresController {
                 listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
             }
 
-        }else if(!"".equals(edadMin) || edadMin == ""){
+        }else if(!"".equals(edadMin)){ // || edadMin == ""
             if(listaU == null || !listaU.isEmpty()){
                 listaU = this.usuarioService.findByEdadMin(Integer.parseInt(edadMin));
             }else{
@@ -131,7 +137,7 @@ public class ListaCompradoresController {
                 listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
             }
 
-        }else if(!"".equals(edadMax) || edadMax == ""){
+        }else if(!"".equals(edadMax)){ // || edadMax == ""
             if(listaU == null || !listaU.isEmpty()){
                 listaU =this.usuarioService.findByEdadMax(Integer.parseInt(edadMax));
             }else{
@@ -140,20 +146,24 @@ public class ListaCompradoresController {
             }
 
         }
-        System.out.println("tamaño"+listaU.size());
 
-        //List<UsuarioDTO> lis = new ArrayList<>();
         for(UsuarioDTO user: listaU){
-            System.out.println("persona"+user.getApellidos());
             if(!lista.contains(user)){
-                //listaU.add(user);
-                ListaUsuarios listaUsuarios = new ListaUsuarios();
-                listaUsuarios.setUsuarioId(Math.toIntExact(user.getId()));
-                listaUsuarios.setListaId(idLista);
-                this.listaUsuariosRepository.save(listaUsuarios);
+                this.listaUsuariosService.crearListaUsuarios(idLista, Math.toIntExact(user.getId()));
             }
         }
-        //this.listaUsuariosRepository.save(lista);
+
+
+        return "redirect:/marketing/editar/"+idLista;
+
+    }
+
+    @RequestMapping("/marketing/UsuarioListaBorrar/{id}/{u}")
+    public String borrarUsuarioLista(Model model, @PathVariable("id") int idLista,@PathVariable("u") int idUsuario){
+        List<ListaDTO> lista = this.listaService.listarListas();
+        model.addAttribute("listas",lista);
+
+        this.listaUsuariosService.borrarUsuarioLista(idLista,idUsuario);
 
         return "redirect:/marketing/editar/"+idLista;
 
