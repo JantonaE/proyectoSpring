@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="es.grupo2.proyectospring.dto.ListaVentaDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="es.grupo2.proyectospring.dto.ProductoDTO" %>
@@ -21,7 +22,7 @@
 
     <%
 
-        List<ListaVentaDTO> listaVenta= (List) request.getAttribute("listaVenta");
+        List<ListaVentaDTO> listaVenta= (List) request.getAttribute("listaVentaDTO");
         CompradorDTO comprador= (CompradorDTO) request.getAttribute("comprador");
 
     %>
@@ -85,8 +86,9 @@
 
 
             %>
-            <form method="POST" action="/Puja/comprador/<%=comprador.getUsuarioId()%>/Productoid/<%=lv.getProducto1()%>">
-                <td><input type="text" name="puja" id="puja" title='Introduce tu puja'/></td>
+
+            <form  method="POST" action="/Puja/comprador/<%=comprador.getUsuarioId() %>/Productoid/<%=lv.getProducto1().getId() %>">
+                <td><input type="text" id="puja" name="puja"> </td>
                 <td><input type="submit" value="Pujar"></td>
 
             </form>

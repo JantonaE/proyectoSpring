@@ -3,6 +3,7 @@ package es.grupo2.proyectospring.controller;
 import es.grupo2.proyectospring.dto.CompradorDTO;
 import es.grupo2.proyectospring.dto.ListaVentaDTO;
 import es.grupo2.proyectospring.dto.ProductoDTO;
+import es.grupo2.proyectospring.dto.UsuarioDTO;
 import es.grupo2.proyectospring.entity.Comprador;
 import es.grupo2.proyectospring.entity.FavoritosComprador;
 import es.grupo2.proyectospring.entity.ListaVenta;
@@ -14,8 +15,10 @@ import es.grupo2.proyectospring.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,15 +75,19 @@ public class CompradorController {
         }
         model.addAttribute("favoritos",favoritos);
         model.addAttribute("comprador",comprador);
-        model.addAttribute("listaVenta", listaVenta);
+        model.addAttribute("listaVentaDTO", listaVenta);
         return "Productos";
 
     }
 
     @RequestMapping("/registrar")
     public String doRegistrarCompradorView(Model model){
+        model.addAttribute("usuario",new UsuarioDTO());
+        model.addAttribute("comprador",new CompradorDTO());
         return "Registrar";
     }
+
+
 
     @RequestMapping("/registrarCompleted")
     public String doRegistrarComprador(Model model){
@@ -125,13 +132,15 @@ public class CompradorController {
     }
 
 
-    @RequestMapping("Puja/comprador/{idc}/Productoid/{idp}")
-    public String doPujar(Model model,@PathVariable("idc") int idc, @PathVariable("idp") int idp){
+    @RequestMapping("/Puja/comprador/{idc}/Productoid/{idp}")
+    public String doPujar(Model model, @PathVariable("idc") int idc, @PathVariable("idp") int idp, @RequestParam(value = "puja",required = false) double puja){
 
-        FavoritosComprador fav=new FavoritosComprador();
-        fav.setCompradorId(idc);
-        fav.setProductoId(idp);
-        favoritosRepository.save(fav);
+        ListaVenta lv=listaVentaRepository.findListaVentaByProductoId(idp);
+        double preciopuja= lv.getPreciopuja();
+        if(puja>preciopuja) {
+            lv.setPreciopuja(puja);
+            listaVentaRepository.save(lv);
+        }
         String res="redirect:/comprador/"+idc;
         return res;
     }
