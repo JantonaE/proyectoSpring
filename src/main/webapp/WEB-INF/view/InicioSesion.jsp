@@ -13,7 +13,7 @@
 <body>
 <h1>Inicio Sesión</h1>
 
-<form method="POST" action="/inicioSesion">
+<form method="POST" action="/inicioSesionCompleted">
     <table>
         <tr>
             <td><label>Usuario:</label></td>

@@ -83,13 +83,19 @@ public class CompradorController {
     }
 
     @RequestMapping("/inicioSesion")
+    public String doMain(Model model){
+
+        return "InicioSesion";
+    }
+
+    @RequestMapping("/inicioSesionCompleted")
     public String doIniciarSesion(Model model,@RequestParam(value = "usuario",required = true) String usuario,
                                   @RequestParam(value = "password",required = true) String password){
-        String ruta="";
+        String ruta="InicioSesion";
         Usuario u = usuarioRepository.findByNombreUsuario(usuario);
         UsuarioDTO usuarioDTO=u.toDTO();
         if(usuarioDTO!=null){
-            ruta="comprador/"+usuarioDTO.getId().intValue();
+            ruta="redirect:/comprador/"+usuarioDTO.getId().intValue();
         }
 
         return ruta;
@@ -97,8 +103,6 @@ public class CompradorController {
 
     @RequestMapping("/registrar")
     public String doRegistrarCompradorView(Model model){
-        model.addAttribute("usuario",new UsuarioDTO());
-        model.addAttribute("comprador",new CompradorDTO());
         return "Registrar";
     }
 
