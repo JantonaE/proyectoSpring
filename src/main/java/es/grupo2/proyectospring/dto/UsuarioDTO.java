@@ -6,6 +6,8 @@ package es.grupo2.proyectospring.dto;
  * and open the template in the editor.
  */
 
+import es.grupo2.proyectospring.entity.Usuario;
+
 import java.util.List;
 
 
@@ -33,8 +35,10 @@ public class UsuarioDTO {
     private List<ListaDTO> listaList;
 
     private MarketingDTO marketing;
+    private String contraseña;
 
-    //private AdministradorDTO administrador;
+
+//private AdministradorDTO administrador;
 
     //private VendedorDTO vendedor;
 
@@ -115,6 +119,27 @@ public class UsuarioDTO {
 
     public void setMarketing(MarketingDTO marketing) {
         this.marketing = marketing;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+    public Usuario toNormal(){
+        Usuario u= new Usuario();
+        u.setNombre(this.nombre);
+        u.setApellidos(this.apellidos);
+        u.setDomicilio(this.domicilio);
+        u.setCiudad(this.ciudad);
+        u.setEdad(this.edad);
+        u.setSexo(this.sexo);
+        u.setContraseña(this.contraseña);
+
+        return u;
     }
 
     @Override

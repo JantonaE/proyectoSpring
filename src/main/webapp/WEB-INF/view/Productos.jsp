@@ -34,6 +34,24 @@
     <%
     } else {
     %>
+    <form method="post" action="Filtrar/<%=comprador.getUsuarioId()%>">
+        <label>Título:</label>
+        <input type="text" id="tituloF" name="tituloF">
+        <label>Descripción:</label>
+        <input type="text" id="descF" name="descF">
+        <label>Precio actual:</label>
+        <input type="text" id="precioF" name="precioF">
+        <label>Categoría:</label>
+        <select id="categoriaF" name="categoriaF">
+            <option disabled selected="Seleccione categoría..."></option>
+            <option>Ocio</option>
+            <option>Ropa</option>
+            <option>Tecnología</option>
+            <option>Decoración</option>
+        </select>
+        <input type="submit" value="Filtrar">
+    </form>
+
     <table border="1">
         <tr>
             <th>ID</th>

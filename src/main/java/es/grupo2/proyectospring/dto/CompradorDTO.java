@@ -1,5 +1,6 @@
 package es.grupo2.proyectospring.dto;
 
+import es.grupo2.proyectospring.entity.Comprador;
 import es.grupo2.proyectospring.entity.Usuario;
 
 public class CompradorDTO {
@@ -36,5 +37,12 @@ public class CompradorDTO {
     }
 
 
+    public Comprador toNormal(){
+        Comprador c=new Comprador();
+        c.setUsuario(this.usuario);
+        c.setCategoriaPreferida(this.categoriaPreferida);
+        c.setUsuarioId(this.usuarioId);
+        return c;
+    }
 
 }

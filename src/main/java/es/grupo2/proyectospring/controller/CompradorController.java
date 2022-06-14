@@ -1,5 +1,6 @@
 package es.grupo2.proyectospring.controller;
 
+
 import es.grupo2.proyectospring.dto.CompradorDTO;
 import es.grupo2.proyectospring.dto.ListaVentaDTO;
 import es.grupo2.proyectospring.dto.ProductoDTO;
@@ -8,10 +9,7 @@ import es.grupo2.proyectospring.entity.Comprador;
 import es.grupo2.proyectospring.entity.FavoritosComprador;
 import es.grupo2.proyectospring.entity.ListaVenta;
 import es.grupo2.proyectospring.entity.Producto;
-import es.grupo2.proyectospring.repository.CompradorRepository;
-import es.grupo2.proyectospring.repository.FavoritosRepository;
-import es.grupo2.proyectospring.repository.ListaVentaRepository;
-import es.grupo2.proyectospring.repository.ProductoRepository;
+import es.grupo2.proyectospring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +29,13 @@ public class CompradorController {
     private CompradorRepository compradorRepository;
     private FavoritosRepository favoritosRepository;
     private ProductoRepository productoRepository;
+
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    public void setUsuarioRepository(UsuarioRepository usuarioRepository){
+        this.usuarioRepository=usuarioRepository;
+    }
 
     @Autowired
     private void setProductoRepository(ProductoRepository productoRepository){
@@ -90,7 +95,30 @@ public class CompradorController {
 
 
     @RequestMapping("/registrarCompleted")
-    public String doRegistrarComprador(Model model){
+    public String doRegistrarComprador(Model model,@RequestParam(value = "nombre",required = true) String nombre,
+                                       @RequestParam(value = "apellidos",required = true) String apellidos,
+                                       @RequestParam(value = "domicilio",required = true) String domicilio,
+                                       @RequestParam(value = "ciudad",required = true) String ciudad,
+                                       @RequestParam(value = "edad",required = true) int edad,
+                                       @RequestParam(value = "sexo",required = true) String sexo,
+                                       @RequestParam(value = "categoria",required = true) String categoria,
+                                       @RequestParam(value = "password",required = true) String password){
+
+        UsuarioDTO usuarioDTO=new UsuarioDTO();
+        usuarioDTO.setNombre(nombre);
+        usuarioDTO.setApellidos(apellidos);
+        usuarioDTO.setDomicilio(domicilio);
+        usuarioDTO.setCiudad(ciudad);
+        usuarioDTO.setEdad(edad);
+        usuarioDTO.setSexo(sexo);
+        usuarioDTO.setContraseña(password);
+        usuarioRepository.save(usuarioDTO.toNormal());
+        CompradorDTO compradorDTO=new CompradorDTO();
+        compradorDTO.setUsuario(usuarioDTO.toNormal());
+        compradorDTO.setCategoriaPreferida(categoria);
+        compradorDTO.setUsuarioId(usuarioDTO.getId().intValue());
+        compradorRepository.save(compradorDTO.toNormal());
+
         return "Registrar";
     }
 
@@ -141,6 +169,15 @@ public class CompradorController {
             lv.setPreciopuja(puja);
             listaVentaRepository.save(lv);
         }
+        String res="redirect:/comprador/"+idc;
+        return res;
+    }
+
+    @RequestMapping("Filtro/{idc}")
+    public String doFiltro(Model model,@PathVariable("idc") int idc){
+
+
+        boolean filtro=true;
         String res="redirect:/comprador/"+idc;
         return res;
     }
