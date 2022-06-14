@@ -24,4 +24,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query ("select u from Usuario u where u.edad <= :str2 and u.edad >= :str1")
     public List<Usuario> findByEdadMinMax(int str1,int str2);
 
+    @Query ("select u from Usuario u where u.nombre >= :nombre")
+    public Usuario findByNombreUsuario(String nombre);
+
 }

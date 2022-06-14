@@ -5,10 +5,7 @@ import es.grupo2.proyectospring.dto.CompradorDTO;
 import es.grupo2.proyectospring.dto.ListaVentaDTO;
 import es.grupo2.proyectospring.dto.ProductoDTO;
 import es.grupo2.proyectospring.dto.UsuarioDTO;
-import es.grupo2.proyectospring.entity.Comprador;
-import es.grupo2.proyectospring.entity.FavoritosComprador;
-import es.grupo2.proyectospring.entity.ListaVenta;
-import es.grupo2.proyectospring.entity.Producto;
+import es.grupo2.proyectospring.entity.*;
 import es.grupo2.proyectospring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,6 +82,19 @@ public class CompradorController {
 
     }
 
+    @RequestMapping("/inicioSesion")
+    public String doIniciarSesion(Model model,@RequestParam(value = "usuario",required = true) String usuario,
+                                  @RequestParam(value = "password",required = true) String password){
+        String ruta="";
+        Usuario u = usuarioRepository.findByNombreUsuario(usuario);
+        UsuarioDTO usuarioDTO=u.toDTO();
+        if(usuarioDTO!=null){
+            ruta="comprador/"+usuarioDTO.getId().intValue();
+        }
+
+        return ruta;
+    }
+
     @RequestMapping("/registrar")
     public String doRegistrarCompradorView(Model model){
         model.addAttribute("usuario",new UsuarioDTO());
@@ -119,7 +129,7 @@ public class CompradorController {
         compradorDTO.setUsuarioId(usuarioDTO.getId().intValue());
         compradorRepository.save(compradorDTO.toNormal());
 
-        return "Registrar";
+        return "InicioSesion";
     }
 
     @RequestMapping("/Favoritos/{id}")
