@@ -63,7 +63,10 @@
 <form:form action="/marketing/listaUsuariosADD" method="post">
   <input type="hidden" name="idLista" value="<%= lista.getIdLista() %>">
   Ciudad: <input type="text" name="ciudad" value="" /> <br><br>
-  Genero: <input type="text" size="4" name="sexo" value="" /> <br><br>
+  Género: <br>
+  Hombre <input type="radio" name="sexo" value="M"/> <br>
+  Mujer  <input type="radio" name="sexo" value="F"/> <br>
+
   Edad. Min: <input type="text" name="edadMin" size="4" value="" />       Edad. Max: <input type="text" size="4" name="edadMax" value="" /> <br><br>
   <input type="submit" value="Añadir Usuarios" />
 </form:form>
