@@ -15,48 +15,10 @@
 </head>
 <body>
 <%
+
+
     String idanalista = (String)request.getAttribute("idanalista");
 %>
-
-<h1>Listado de usuarios</h1>
-<form method="get" action="AnalisisUsuariosServlet">
-    <input type="hidden" name="idanalista" value="<%=idanalista %>">
-    <input type="hidden" name="id" value="<%=analisis==null?"":analisis.getId() %>">
-    Nombre: <input type="text" name="filtroNombre" value=<%=nombre%>>
-    <nbsp>
-        Apellidos: <input type="text" name="filtroApellido" value=<%=apellidos%>>
-        <br>
-        Domicilio: <input type="text" name="filtroDomicilio" value=<%=domicilio%>>
-        <nbsp>
-            Ciudad: <input type="text" name="filtroCiudad" value=<%=ciudad%>>
-            <br>
-            Edad: <input type="text" name="filtroEdad" value=<%=edad%>>
-            <nbsp>
-                Sexo:
-                <select name="Sexo">
-                    <option value="-" <% if(sexo.equals("-")){ %> selected <% } %>>-</option>
-                    <option value="M" <% if(sexo.equals("M")){ %> selected <% } %>>M</option>
-                    <option value="F" <% if(sexo.equals("F")){ %> selected <% } %>>F</option>
-                </select>
-                <br>
-                Ordenar por:
-                <select name="Ordenar">
-                    <option value="-" <% if(orden.equals("-")){ %> selected <% } %>>-</option>
-                    <option value="apellidosASC" <% if(orden.equals("apellidosASC")){ %> selected <% } %>>APELLIDOS ASC</option>
-                    <option value="apellidosDESC" <% if(orden.equals("apellidosDESC")){ %> selected <% } %>>APELLIDOS DESC</option>
-                </select>
-                <input type="submit" value="Filtrar" />
-                <br>
-                <br>
-                Nombre analisis: <input type="text" name="nombreAnalisis" value="<%=analisis==null?"":analisis.getNombre() %>">
-                <input type="submit" value="Nuevo analisis" formaction="GuardarAnalisisServlet"/>
-                <input type="submit" value="Actualizar" formaction="ActualizarAnalisisServlet"
-                        <% if(analisis==null){ %>
-                       disabled
-                        <%} %>
-                />
-
-</form>
 
 <table border="1">
     <tr>
