@@ -40,9 +40,9 @@
     %>
     <tr>
         <td><%= analisis.get(i).getNombre() %></td>
-        <td><a href="/analista/ver/<%=analista.getUsuarioId()%>/<%=analisis.get(i).getId()%>">Ver/Editar</a></td>
-        <td><a href="/analista/copiar/<%=analista.getUsuarioId()%>/<%=analisis.get(i).getId()%>">Copiar</a></td>
-        <td><a href="/analista/borrar/<%=analista.getUsuarioId()%>/<%=analisis.get(i).getId()%>">Borrar</a></td>
+        <td><a href="/analista/<%=analista.getUsuarioId()%>/ver/<%=analisis.get(i).getId()%>">Ver/Editar</a></td>
+        <td><a href="/analista/<%=analista.getUsuarioId()%>/copiar/<%=analisis.get(i).getId()%>">Copiar</a></td>
+        <td><a href="/analista/<%=analista.getUsuarioId()%>/borrar/<%=analisis.get(i).getId()%>">Borrar</a></td>
     </tr>
     <%
         }
@@ -55,7 +55,7 @@
 %>
 
 <br>
-<a href="/analista/nuevo/<%=analista.getUsuarioId()%>">Nuevo análisis</a>
+<a href="/analista/<%=analista.getUsuarioId()%>/nuevo">Nuevo análisis</a>
 
 </body>
 </html>
