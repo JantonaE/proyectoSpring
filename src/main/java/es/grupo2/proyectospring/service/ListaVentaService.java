@@ -12,6 +12,7 @@ import es.grupo2.proyectospring.repository.VendedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,5 +66,44 @@ public class ListaVentaService {
     public ListaVentaDTO buscarVenta(int vendedorId, int productoId){
         return this.listaVentaRepository.findByVendedorAndProducto(vendedorId, productoId).toDTO();
     }
+
+    public List<ListaVentaDTO> findListaVentaByVendedorId(int id){
+        List<ListaVentaDTO> listaVentaDTOS = new ArrayList<>();
+        List<ListaVenta> listaVentas = this.listaVentaRepository.findListaVentaByVendedorId(id);
+
+
+        for(ListaVenta listaVenta: listaVentas){
+            listaVentaDTOS.add(listaVenta.toDTO());
+        }
+
+        return listaVentaDTOS;
+    }
+
+    public List<ListaVentaDTO> filtrar(int precio, String producto, String comprador){
+        List<ListaVentaDTO> listaVentaDTOS = new ArrayList<>();
+        List<ListaVenta> listaVentas = this.listaVentaRepository.findByfiltro(Double.parseDouble(String.valueOf(precio)) , comprador, producto);
+
+        System.out.println(listaVentas.size());
+
+        for(ListaVenta listaVenta: listaVentas){
+            listaVentaDTOS.add(listaVenta.toDTO());
+        }
+
+        return listaVentaDTOS;
+    }
+
+    public List<ListaVentaDTO> filtroProducto(int precio, String producto){
+        List<ListaVentaDTO> listaVentaDTOS = new ArrayList<>();
+        List<ListaVenta> listaVentas = this.listaVentaRepository.findByProducto(Double.parseDouble(String.valueOf(precio)) , producto);
+
+        System.out.println(listaVentas.size());
+
+        for(ListaVenta listaVenta: listaVentas){
+            listaVentaDTOS.add(listaVenta.toDTO());
+        }
+
+        return listaVentaDTOS;
+    }
+
 
 }

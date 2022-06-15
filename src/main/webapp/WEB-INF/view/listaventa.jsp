@@ -1,7 +1,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="es.grupo2.proyectospring.dto.ListaDTO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="es.grupo2.proyectospring.entity.ListaVenta" %><%--
+<%@ page import="es.grupo2.proyectospring.entity.ListaVenta" %>
+<%@ page import="es.grupo2.proyectospring.dto.ListaVentaDTO" %><%--
   Created by IntelliJ IDEA.
   User: USUARIO
   Date: 09/06/2022
@@ -17,9 +18,17 @@
 <body>
 
     <%
-        List<ListaVenta> listaVentaList = (List<ListaVenta>) request.getAttribute("listaventa");
+        List<ListaVentaDTO> listaVentaDTOS = (List<ListaVentaDTO>) request.getAttribute("listaventa");
+        int vendedor = (int) request.getAttribute("vendedor");
     %>
 
+    <form method="post" action="/vendedor/filtrar">
+        <input type="hidden" value="<%=vendedor%>" name="vendedor" >>
+        Nombre del Producto: <input type="text" name="producto" value="" />
+        Nombre del Comprador: <input type="text" name="comprador" value="" />
+        Precio Máximo: <input type="number" name="precio" value="0" >
+        <input type="submit" value="Filtrar" />
+    </form>
     <table>
         <tr>
             <td>Vendedor</td>
@@ -30,7 +39,7 @@
         </tr>
 
         <%
-            for(ListaVenta lv: listaVentaList){
+            for(ListaVentaDTO lv: listaVentaDTOS){
         %>
 
         <tr>
@@ -58,7 +67,7 @@
     </table>
 
 
-    <a href="/vendedor/<%=listaVentaList.get(0).getVendedorId()%>/nuevo">CREAR NUEVA VENTA</a>
+    <a href="/vendedor/<%=vendedor%>/nuevo">CREAR NUEVA VENTA</a>
 
 
 </body>

@@ -18,4 +18,12 @@ public interface ListaVentaRepository extends JpaRepository<ListaVenta, Integer>
 
     @Query("SELECT lv FROM ListaVenta lv WHERE lv.vendedorId = :idV AND lv.producto = :idP")
     public ListaVenta findByVendedorAndProducto(int idV, int idP);
+
+    @Query("SELECT lv FROM ListaVenta lv WHERE lv.comprador.usuario.nombre LIKE :c OR lv.producto1.titulo LIKE :producto AND lv.preciopuja < :p ORDER BY lv.preciopuja DESC ")
+    public List<ListaVenta> findByfiltro(double p, String c, String producto);
+
+    @Query("SELECT lv FROM ListaVenta lv WHERE lv.producto1.titulo LIKE :producto AND lv.preciopuja < :p ORDER BY lv.preciopuja DESC ")
+    public List<ListaVenta> findByProducto(double p, String producto);
+
+    
 }
