@@ -8,7 +8,9 @@ import es.grupo2.proyectospring.entity.Usuario;
 import es.grupo2.proyectospring.repository.ListaUsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+/*
+    AUTHOR: Jesús Antona Espejo
+*/
 import java.util.List;
 
 @Service

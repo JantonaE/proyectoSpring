@@ -2,13 +2,16 @@
 <%@ page import="es.grupo2.proyectospring.entity.ListaUsuarios" %>
 <%@ page import="java.util.List" %>
 <%@ page import="es.grupo2.proyectospring.dto.ListaDTO" %>
-<%@ page import="es.grupo2.proyectospring.dto.UsuarioDTO" %><%--
+<%@ page import="es.grupo2.proyectospring.dto.UsuarioDTO" %>
+<%--
   Created by IntelliJ IDEA.
-  User: USUARIO
+  User: Jesús Antona Espejo
   Date: 11/06/2022
   Time: 10:15
   To change this template use File | Settings | File Templates.
 --%>
+
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

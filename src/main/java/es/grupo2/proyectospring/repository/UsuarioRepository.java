@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+/*
+    AUTHOR: Jesús Antona Espejo
+*/
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 

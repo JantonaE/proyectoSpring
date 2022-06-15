@@ -4,7 +4,9 @@ import es.grupo2.proyectospring.dto.MensajeDTO;
 
 import javax.persistence.*;
 import java.util.Objects;
-
+/*
+    AUTHOR: Jesús Antona Espejo
+*/
 @Entity
 public class Mensaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,12 +1,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="es.grupo2.proyectospring.dto.ListaDTO" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%--
   Created by IntelliJ IDEA.
-  User: USUARIO
-  Date: 09/06/2022
-  Time: 11:28
+  User: Jesús Antona Espejo
+  Date: 11/06/2022
+  Time: 10:15
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

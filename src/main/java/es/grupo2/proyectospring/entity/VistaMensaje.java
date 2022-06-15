@@ -6,7 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+/*
+    AUTHOR: Jesús Antona Espejo
+*/
 @Entity
 @Immutable
 @Table(name = "Vista_mensaje")

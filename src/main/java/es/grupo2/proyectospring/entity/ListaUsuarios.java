@@ -2,7 +2,9 @@ package es.grupo2.proyectospring.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
-
+/*
+    AUTHOR: Jesús Antona Espejo
+*/
 @Entity
 @Table(name = "lista_usuarios", schema = "sql4483358", catalog = "")
 @IdClass(ListaUsuariosPK.class)
