@@ -65,6 +65,7 @@ public class ControllerMensajes {
     public String showBandeja(@PathVariable("id") int idUsuario, Model model){
         //List<Mensaje> vistaMensajeList = this.mensajeService.
         List<Mensaje> vistaMensajeList = this.mensajeRepository.findByUsuarioId(idUsuario);
+        model.addAttribute("idUsuario",idUsuario);
         model.addAttribute("mensajes",vistaMensajeList);
         return "BandejaMensajes";
     }

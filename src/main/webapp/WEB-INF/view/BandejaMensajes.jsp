@@ -18,9 +18,18 @@
 </head>
 <body>
 <%
+  int idUsuario = (int) request.getAttribute("idUsuario");
   List<Mensaje> lista = (List<Mensaje>)request.getAttribute("mensajes");
 %>
-<h1> Bandeja de Mensajes <%= lista.get(0).getDestinatarioId() %></h1>
+<h1> Bandeja de Mensajes <%= idUsuario %></h1>
+
+<%
+  if(lista.isEmpty()){
+    %>
+ <h2>No hay mensajes</h2>
+<%
+  }else{
+%>
 <table border="1">
   <tr>
     <td>ID EMISOR</td>
@@ -54,9 +63,12 @@
     }
   %>
 </table>
+<%
+  }
+%>
 <br>
 <br>
-<a href="index.html">Volver</a>
+<a href="/marketing/<%= idUsuario %>">Volver</a>
 
 </body>
 </html>
