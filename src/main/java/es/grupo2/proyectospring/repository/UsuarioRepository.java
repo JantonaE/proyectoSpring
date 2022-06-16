@@ -29,18 +29,17 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Query ("select u from Usuario u where u.edad <= :str2 and u.edad >= :str1")
     public List<Usuario> findByEdadMinMax(int str1,int str2);
-/*
-    @Query ("select u from Usuario u where u.edad <= :str2 and u.edad >= :str1 and u.ciudad like :c and u.ciudad like :c")
+
+    @Query ("select u from Usuario u where u.edad <= :str2 and u.edad >= :str1 and u.ciudad like :c and u.sexo like :x")
     public List<Usuario> findByEdadMinMaxSexoCiudad(int str1,int str2,String x,String c);
 
-    @Query ("select u from Usuario u where u.edad <= :str2 and u.edad >= :str1 and u.ciudad like :c")
+    @Query ("select u from Usuario u where u.edad <= :str2 and u.edad >= :str1 and u.sexo like :x")
     public List<Usuario> findByEdadMinMaxSexo(int str1,int str2,String x);
 
     @Query ("select u from Usuario u where u.edad <= :str2 and u.edad >= :str1 and u.ciudad like :c")
     public List<Usuario> findByEdadMinMaxCiudad(int str1,int str2,String c);
 
 
- */
 
     @Query ("select u from Usuario u where u.nombre like:nombre")
     public Usuario findByNombreUsuario(String nombre);

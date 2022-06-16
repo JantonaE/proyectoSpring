@@ -84,6 +84,7 @@ public class ListaCompradoresController {
         List<ListaDTO> lista = this.listaService.listarListas();
         model.addAttribute("listas",lista);
         Marketing m = this.marketingRepository.findById(id).orElse(null);
+        System.out.println("marketing: "+m.getUsuarioId());
         this.listaService.crearLista(descripcion,m,null);
         return "redirect:/marketing/"+id;
 
@@ -132,7 +133,7 @@ public class ListaCompradoresController {
             if(listaU == null || listaU.isEmpty()){
                 listaU = this.usuarioService.findByEdadMinMax(Integer.parseInt(edadMin), Integer.parseInt(edadMax));
             }else{
-                /*
+
                 if(!"".equals(sexo) || sexo == null){
                     listaU = this.usuarioService.findByEdadMinMaxSex(Integer.parseInt(edadMin),Integer.parseInt(edadMax),sexo);
                 }else if(!"".equals(ciudad) || ciudad == null){
@@ -141,16 +142,16 @@ public class ListaCompradoresController {
                     listaU = this.usuarioService.findByEdadMinMaxSexoCiudad(Integer.parseInt(edadMin),Integer.parseInt(edadMax),sexo,ciudad);
                 }
 
-                 */
-                List<UsuarioDTO> nueva = this.usuarioService.findByEdadMinMax(Integer.parseInt(edadMin),Integer.parseInt(edadMax));
-                listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
+
+                //List<UsuarioDTO> nueva = this.usuarioService.findByEdadMinMax(Integer.parseInt(edadMin),Integer.parseInt(edadMax));
+                //listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
             }
 
         }else if(!"".equals(edadMin)){ // || edadMin == ""
             if(listaU == null || listaU.isEmpty()){
                 listaU = this.usuarioService.findByEdadMin(Integer.parseInt(edadMin));
             }else{
-                /*
+
                 if(!"".equals(sexo) || sexo == null){
                     listaU = this.usuarioService.findByEdadMinMaxSex(Integer.parseInt(edadMin),100,sexo);
                 }else if(!"".equals(ciudad) || ciudad == null){
@@ -159,16 +160,16 @@ public class ListaCompradoresController {
                     listaU = this.usuarioService.findByEdadMinMaxSexoCiudad(Integer.parseInt(edadMin),100,sexo,ciudad);
                 }
 
-                 */
-                List<UsuarioDTO> nueva = this.usuarioService.findByEdadMin(Integer.parseInt(edadMin));
-                listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
+
+                //List<UsuarioDTO> nueva = this.usuarioService.findByEdadMin(Integer.parseInt(edadMin));
+                //listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
             }
 
         }else if(!"".equals(edadMax)){ // || edadMax == ""
             if(listaU == null || listaU.isEmpty()){
                 listaU =this.usuarioService.findByEdadMax(Integer.parseInt(edadMax));
             }else{
-                /*
+
                 if(!"".equals(sexo) || sexo == null){
                     listaU = this.usuarioService.findByEdadMinMaxSex(0,Integer.parseInt(edadMax),sexo);
                 }else if(!"".equals(ciudad) || ciudad == null){
@@ -177,9 +178,9 @@ public class ListaCompradoresController {
                     listaU = this.usuarioService.findByEdadMinMaxSexoCiudad(0,Integer.parseInt(edadMax),sexo,ciudad);
                 }
 
-                 */
-                List<UsuarioDTO> nueva = this.usuarioService.findByEdadMax(Integer.parseInt(edadMax));
-                listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
+
+                //List<UsuarioDTO> nueva = this.usuarioService.findByEdadMax(Integer.parseInt(edadMax));
+                //listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
             }
 
         }

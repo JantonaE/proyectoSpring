@@ -67,7 +67,7 @@ public class UsuarioService {
                 usuarioEntityADTO(this.usuarioRepository.findByEdadMinMax(min, max));
         return listaDTO;
     }
-/*
+
     public List<UsuarioDTO> findByEdadMinMaxSex(int min,int max,String x) {
         List<UsuarioDTO> listaDTO =
                 usuarioEntityADTO(this.usuarioRepository.findByEdadMinMaxSexo(min, max,x));
@@ -86,7 +86,7 @@ public class UsuarioService {
         return listaDTO;
     }
 
- */
+
 
     public List<UsuarioDTO> findByEdadMin(int min) {
         List<UsuarioDTO> listaDTO = usuarioEntityADTO(this.usuarioRepository.findByEdadMin(min));
