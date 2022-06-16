@@ -82,7 +82,9 @@
                 }
 
 
-
+                String img="images/"+lv.getProducto1().getUrlFoto() + ".jpg";
+                String img2=lv.getProducto1().getUrlFoto() + ".jpg";
+                String img1="@{/images/"+lv.getProducto1().getUrlFoto() + ".jpg}";
 
         %>
         <tr>
@@ -90,7 +92,7 @@
             <td><%= lv.getProducto1().getTitulo() %></td>
             <td><%= lv.getProducto1().getDescripcion() %></td>
             <td><%= lv.getProducto1().getPrecioSalida() %></td>
-            <td><% //lv.getProducto1().getURLfoto() %>a</td>
+            <td><img src="<%=lv.getProducto1().getUrlFoto()%>" class="img-thumbnail" width="100" height="100"></td>
             <td><%= res.toString()%></td>
             <td><%= lv.getPreciopuja() %></td>
             <%
@@ -125,8 +127,13 @@
             }
         %>
     </table>
+
     <form method="POST" action="/Favoritos/<%=comprador.getUsuarioId()%>">
         <input type="submit" value="Favoritos" >
+    </form>
+
+    <form method="POST" action="/inicioSesion">
+        <input type="submit" value="Salir" >
     </form>
     <%
         }

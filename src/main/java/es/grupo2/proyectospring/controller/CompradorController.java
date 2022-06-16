@@ -110,10 +110,12 @@ public class CompradorController {
         Marketing marketing = this.marketingRepository.findById(idUser).orElse(null);
         if(marketing != null){
             ruta="redirect:/marketing/"+marketing.getUsuarioId();
+        }else if(usuarioDTO!=null){
+            ruta="redirect:/comprador/"+usuarioDTO.getId().intValue();
         }
 
-        System.out.println("Ruta:"+ruta);
-        System.out.println("Marketing:"+marketing.getUsuarioId());
+       // System.out.println("Ruta:"+ruta);
+        //System.out.println("Marketing:"+marketing.getUsuarioId());
         return ruta;
     }
 
@@ -131,7 +133,7 @@ public class CompradorController {
                                        @RequestParam(value = "ciudad",required = true) String ciudad,
                                        @RequestParam(value = "edad",required = true) int edad,
                                        @RequestParam(value = "sexo",required = true) String sexo,
-                                       @RequestParam(value = "categoria",required = true) String categoria,
+                                       @RequestParam(value = "cat",required = true) String cat,
                                        @RequestParam(value = "password",required = true) String password){
 
         UsuarioDTO usuarioDTO=new UsuarioDTO();
@@ -143,12 +145,15 @@ public class CompradorController {
         usuarioDTO.setSexo(sexo);
         usuarioDTO.setContraseña(password);
         usuarioRepository.save(usuarioDTO.toNormal());
+
+       /* Usuario u= usuarioRepository.findByNombreUsuario(nombre);
+        usuarioDTO.setId(u.getId().longValue());
         CompradorDTO compradorDTO=new CompradorDTO();
         compradorDTO.setUsuario(usuarioDTO.toNormal());
-        compradorDTO.setCategoriaPreferida(categoria);
-        compradorDTO.setUsuarioId(usuarioDTO.getId().intValue());
+        compradorDTO.setCategoriaPreferida(cat);
+        compradorDTO.setUsuarioId(u.getId());
         compradorRepository.save(compradorDTO.toNormal());
-
+*/
         return "InicioSesion";
     }
 

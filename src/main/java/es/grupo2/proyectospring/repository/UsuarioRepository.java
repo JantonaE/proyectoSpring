@@ -42,7 +42,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
  */
 
-    @Query ("select u from Usuario u where u.nombre >= :nombre")
+    @Query ("select u from Usuario u where u.nombre like:nombre")
     public Usuario findByNombreUsuario(String nombre);
 
     @Query ("select u from Usuario u where u.nombre like :nombre and u.contraseña like :pass")

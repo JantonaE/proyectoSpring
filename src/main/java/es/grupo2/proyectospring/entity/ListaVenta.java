@@ -35,6 +35,8 @@ public class ListaVenta {
     @Column(name = "preciopuja", nullable = false, precision = 0)
     private Double preciopuja;
 
+
+
     @MapsId
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vendedor_id", nullable = false)

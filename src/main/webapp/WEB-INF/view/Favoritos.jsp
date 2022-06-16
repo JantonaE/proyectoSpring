@@ -60,7 +60,7 @@
         <td><%= p.getTitulo() %></td>
         <td><%= p.getDescripcion() %></td>
         <td><%= p.getPrecioSalida() %></td>
-        <td><%//p.getURLfoto() %>a</td>
+        <td><img src="<%=p.getUrlFoto()%>" class="img-thumbnail" width="100" height="100"></td>
         <td><%= res.toString() %></td>
 
         <td><a href="EliminarFavorito/comprador/<%=c.getUsuarioId()%>/Productoid/<%= p.getId() %>">Eliminar</a></td>

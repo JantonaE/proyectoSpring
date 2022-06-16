@@ -49,28 +49,28 @@
     <tr>
       <td><label for="sexo">Sexo:</label></td>
       <td>
-        <form>
+
           <select id="sexo" name="sexo">
             <option disabled selected="Seleccione sexo..."></option>
             <option>M</option>
             <option>F</option>
           </select>
-        </form>
+
       </td>
     </tr>
 
     <tr>
-      <td><label for="categoria">Categoría preferida:</label></td>
+      <td><label>Categoría preferida:</label></td>
       <td>
-        <form>
-          <select id="categoria" name="categoria">
+
+          <select id="cat" name="cat">
             <option disabled selected="Seleccione categoría..."></option>
             <option>Ocio</option>
             <option>Ropa</option>
             <option>Tecnología</option>
             <option>Decoración</option>
           </select>
-        </form>
+
       </td>
     </tr>
 
@@ -82,7 +82,7 @@
 
     </tr>
   <form method="post" action="/inicioSesion">
-    <td><input type="button" value="Cancelar" /></td>
+    <td><input type="submit" value="Cancelar" /></td>
   </form>
     <td><input type="submit" value="Registrar" /></td>
     </tr>
