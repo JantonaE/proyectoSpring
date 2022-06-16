@@ -19,6 +19,7 @@
 <body>
 <%
   int idUsuario = (int) request.getAttribute("idUsuario");
+  String ruta = (String) request.getAttribute("ruta");
   List<Mensaje> lista = (List<Mensaje>)request.getAttribute("mensajes");
 %>
 <h1> Bandeja de Mensajes <%= idUsuario %></h1>
@@ -68,7 +69,7 @@
 %>
 <br>
 <br>
-<a href="/marketing/<%= idUsuario %>">Volver</a>
+<a href="/<%= ruta %>/<%= idUsuario %>">Volver</a>
 
 </body>
 </html>

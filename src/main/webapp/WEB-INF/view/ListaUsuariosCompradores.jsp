@@ -51,7 +51,7 @@
     Descripción: <input type="text" name="descripcion" size="30"> <br>
     <input type="submit"  value="Crear Lista"></form:form>
 
-<a href="/bandeja/<%= idUsuario %>">Bandeja Mensajes</a>
+<a href="/bandeja/<%= idUsuario %>/marketing">Bandeja Mensajes</a>
 
 </body>
 </html>
