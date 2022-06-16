@@ -1,5 +1,7 @@
 package es.grupo2.proyectospring.dto;
 
+import es.grupo2.proyectospring.entity.Producto;
+
 import java.math.BigDecimal;
 
 public class ProductoDTO {
@@ -75,4 +77,16 @@ public class ProductoDTO {
     public String toString() {
         return super.toString();
     }
+
+    public Producto toNormal(){
+        Producto p=new Producto();
+        p.setId(this.id);
+        p.setCategoriaProducto(this.categoriaProducto);
+        p.setDescripcion(this.descripcion);
+        p.setTitulo(this.titulo);
+        p.setPrecioSalida(this.precioSalida);
+        p.setUrlFoto(this.urlFoto);
+        return p;
+    }
+
 }

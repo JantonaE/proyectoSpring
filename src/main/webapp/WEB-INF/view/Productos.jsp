@@ -82,10 +82,6 @@
                 }
 
 
-                String img="images/"+lv.getProducto1().getUrlFoto() + ".jpg";
-                String img2=lv.getProducto1().getUrlFoto() + ".jpg";
-                String img1="@{/images/"+lv.getProducto1().getUrlFoto() + ".jpg}";
-
         %>
         <tr>
             <td><%= lv.getProducto1().getId() %></td>
@@ -99,8 +95,12 @@
 
                 boolean checkFavorito= false;
                 List<ProductoDTO> favoritos = (List) request.getAttribute("favoritos");
+                List<Producto> check=new ArrayList<>();
+                for(ProductoDTO productoDTO:favoritos){
+                    check.add(productoDTO.toNormal());
+                }
 
-                if(favoritos.contains(lv.getProducto1().toDTO())){
+                if(check.contains(lv.getProducto1())){
                     checkFavorito=true;
                 }
 
