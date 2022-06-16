@@ -69,11 +69,11 @@ public class ControllerMensajes {
         return "BandejaMensajes";
     }
 
-    @RequestMapping("/marketing/mensaje/{id}")
-    public String initCreadorMensaje(Model model, @PathVariable("id") int idLista){
-        System.out.println("El id llega:"+idLista);
+    @RequestMapping("/marketing/mensaje/{id}/{u}")
+    public String initCreadorMensaje(Model model, @PathVariable("id") int idLista,@PathVariable("id") int idU){
+
         ListaDTO lista = this.listaService.buscarLista(idLista);
-        System.out.println("El lista:"+lista.getDescripcion());
+        model.addAttribute("idUsuario",idU);
         model.addAttribute("lista",lista);
 
         return "CreadorMensajes";
@@ -82,7 +82,8 @@ public class ControllerMensajes {
 
     @PostMapping("/marketing/enviar")
     public String enviarMensaje(Model model, @RequestParam("listaId") int idLista,@RequestParam("emisor") int idEmisor,
-                                @RequestParam("titulo") String titulo,@RequestParam("contenido") String contenido){
+                                @RequestParam("titulo") String titulo,@RequestParam("contenido") String contenido,
+                                @RequestParam("idUsuario") int idU){
         //ListaDTO lista = this.listaService.buscarLista(idLista);
         List<ListaUsuarios> lu = this.listaUsuariosRepository.findListaUsuariosByIDlista(idLista);
         //List<UsuarioDTO> lu= lista.getUsuarioList();
@@ -90,7 +91,7 @@ public class ControllerMensajes {
             this.mensajeService.crearMensaje(u.getUsuarioId(),idEmisor,titulo,contenido,"0");
         }
 
-        return "redirect:/marketing";
+        return "redirect:/marketing/"+idU;
 
     }
 

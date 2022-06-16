@@ -26,8 +26,14 @@ public class CompradorController {
     private CompradorRepository compradorRepository;
     private FavoritosRepository favoritosRepository;
     private ProductoRepository productoRepository;
+    private MarketingRepository marketingRepository;
 
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    public void setMarketingRepository(MarketingRepository marketingRepository) {
+        this.marketingRepository = marketingRepository;
+    }
 
     @Autowired
     public void setUsuarioRepository(UsuarioRepository usuarioRepository){
@@ -92,12 +98,22 @@ public class CompradorController {
     public String doIniciarSesion(Model model,@RequestParam(value = "usuario",required = true) String usuario,
                                   @RequestParam(value = "password",required = true) String password){
         String ruta="InicioSesion";
-        Usuario u = usuarioRepository.findByNombreUsuario(usuario);
+        Usuario u = usuarioRepository.findByNombreUsuarioPass(usuario,password);
         UsuarioDTO usuarioDTO=u.toDTO();
+        int idUser = u.getId();
+        /*
         if(usuarioDTO!=null){
             ruta="redirect:/comprador/"+usuarioDTO.getId().intValue();
         }
 
+         */
+        Marketing marketing = this.marketingRepository.findById(idUser).orElse(null);
+        if(marketing != null){
+            ruta="redirect:/marketing/"+marketing.getUsuarioId();
+        }
+
+        System.out.println("Ruta:"+ruta);
+        System.out.println("Marketing:"+marketing.getUsuarioId());
         return ruta;
     }
 

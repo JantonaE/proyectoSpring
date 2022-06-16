@@ -19,7 +19,8 @@
   <title>Datos Lista Compradores</title>
 </head>
 <%
-  //String idLista = request.getParameter("id");
+  int idUsuario = (int) request.getAttribute("idUsuario");
+  System.out.println("iduser:"+idUsuario);
   List<UsuarioDTO> listaU = (List<UsuarioDTO>) request.getAttribute("usuarios");
   ListaDTO lista = (ListaDTO)request.getAttribute("lista");
 
@@ -50,7 +51,7 @@
     <td><%= u.getCiudad() %></td>
     <td><%= u.getEdad() %></td>
     <td><%= u.getSexo() %></td>
-    <td><a href="/marketing/UsuarioListaBorrar/<%= lista.getIdLista() %>/ <%= u.getId() %>">Borrar</a> </td>
+    <td><a href="/marketing/UsuarioListaBorrar/<%= lista.getIdLista() %>/ <%= u.getId() %>/<%= idUsuario %>">Borrar</a> </td>
   </tr>
   <%
     }
@@ -64,6 +65,7 @@
 <h2>Añadir usuarios a lista <%= lista.getDescripcion() %></h2>
 
 <form:form action="/marketing/listaUsuariosADD" method="post">
+  <input type="hidden" name="idUsuario" value="<%= idUsuario %>">
   <input type="hidden" name="idLista" value="<%= lista.getIdLista() %>">
   Ciudad: <input type="text" name="ciudad" value="" /> <br><br>
   Género: <br>
@@ -75,7 +77,7 @@
 </form:form>
 
 
-<a href="/marketing/">Volver</a>
+<a href="/marketing/<%= idUsuario %>">Volver</a>
 </body>
 
 </html>

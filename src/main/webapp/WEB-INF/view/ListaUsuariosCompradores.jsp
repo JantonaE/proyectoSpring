@@ -28,6 +28,7 @@
     </tr>
     <tr>
             <%
+            int idUsuario = (int) request.getAttribute("idUsuario");
             List<ListaDTO> lista = (List)request.getAttribute("listas");
             for (ListaDTO lu: lista) {
             %>
@@ -35,9 +36,9 @@
         <td><%= lu.getIdLista() %></td>
         <td><%= lu.getDescripcion() %></td>
         <td><%= lu.getMarketingId() %></td>
-        <td><a href="/marketing/editar/<%= lu.getIdLista() %>">Editar</a></td></td>
-        <td><a href="/marketing/borrar/<%= lu.getIdLista() %>">Borrar</a></td>
-        <td><a href="/marketing/mensaje/<%= lu.getIdLista() %>">Enviar Mensaje</a></td>
+        <td><a href="/marketing/editar/<%= lu.getIdLista() %>/<%= idUsuario %>">Editar</a></td></td>
+        <td><a href="/marketing/borrar/<%= lu.getIdLista() %>/<%= idUsuario %>">Borrar</a></td>
+        <td><a href="/marketing/mensaje/<%= lu.getIdLista() %>/<%= idUsuario %>">Enviar Mensaje</a></td>
     </tr>
     <%
         }
@@ -46,7 +47,7 @@
 
 <br>
 <form:form action="/marketing/crear" method="post">
-    <input type="hidden" name="marketingId" value="<%= lista.get(0).getMarketingId() %>">
+    <input type="hidden" name="marketingId" value="<%= idUsuario %>">
     Descripción: <input type="text" name="descripcion" size="30"> <br>
     <input type="submit"  value="Crear Lista"></form:form>
 

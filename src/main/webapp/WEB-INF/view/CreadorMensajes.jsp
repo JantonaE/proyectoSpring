@@ -15,12 +15,14 @@
     <title>Creador Mensajes</title>
 </head>
 <%
+    int idUsuario = (int) request.getAttribute("idUsuario");
     ListaDTO lista = (ListaDTO) request.getAttribute("lista");
     long idmarketing = lista.getMarketingId();
 %>
 <body>
 <h1>Enviar Mensaje <%= lista.getIdLista() %></h1>
 <form:form action="/marketing/enviar" method="post">
+    <input type="hidden" name="idUsuario" value="<%= idUsuario %>">
     <input type="hidden" name="listaId" value="<%= lista.getIdLista() %>">
     <input type="hidden" name="emisor" value="<%= lista.getMarketingId() %>">
     Titulo: <input type="text" name="titulo" size="20">
@@ -31,6 +33,6 @@
 </form:form>
 
 <br>
-<a href="/marketing/">Volver</a>
+<a href="/marketing/<%= idUsuario %>">Volver</a>
 </body>
 </html>

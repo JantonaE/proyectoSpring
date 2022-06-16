@@ -56,24 +56,25 @@ public class ListaCompradoresController {
         this.usuarioService = usuarioService;
     }
 
-    @RequestMapping("/marketing")
-    public String showListaCompradores(Model model){
+    @RequestMapping("/marketing/{id}")
+    public String showListaCompradores(Model model,@PathVariable("id") int idUsuario){
         List<ListaDTO> lista = this.listaService.listarListas();
         ListaDTO listaDTO = null;
+        model.addAttribute("idUsuario",idUsuario);
         model.addAttribute("listas",lista);
         model.addAttribute("Lista",listaDTO);
         return "ListaUsuariosCompradores";
 
     }
 
-    @RequestMapping("/marketing/borrar/{id}")
-    public String borrarListaCompradores(Model model, @PathVariable("id") int idLista){
+    @RequestMapping("/marketing/borrar/{id}/{u}")
+    public String borrarListaCompradores(Model model, @PathVariable("id") int idLista,@PathVariable("u") int idU){
         List<ListaDTO> lista = this.listaService.listarListas();
         model.addAttribute("listas",lista);
 
         this.listaService.borrarLista(idLista);
 
-        return "redirect:/marketing/";
+        return "redirect:/marketing/"+idU;
 
     }
 
@@ -84,15 +85,16 @@ public class ListaCompradoresController {
         model.addAttribute("listas",lista);
         Marketing m = this.marketingRepository.findById(id).orElse(null);
         this.listaService.crearLista(descripcion,m,null);
-        return "redirect:/marketing/";
+        return "redirect:/marketing/"+id;
 
     }
 
-    @RequestMapping("/marketing/editar/{id}")
-    public String editarListaCompradores(Model model, @PathVariable("id") int idLista){
+    @RequestMapping("/marketing/editar/{id}/{u}")
+    public String editarListaCompradores(Model model, @PathVariable("id") int idLista,@PathVariable("u") int idU){
         ListaDTO lista = this.listaService.buscarLista(idLista);
         model.addAttribute("lista",lista);
-
+        System.out.println("idUser controler"+idU);
+        model.addAttribute("idUsuario",idU);
         List<ListaUsuarios> lu = this.listaUsuariosRepository.findListaUsuariosByIDlista(idLista);
         List<UsuarioDTO> users = new ArrayList<>();
         for(ListaUsuarios u : lu){
@@ -108,7 +110,7 @@ public class ListaCompradoresController {
     @RequestMapping ("/marketing/listaUsuariosADD")
     public String addUsuariosListaCompradores(Model model, @RequestParam(value = "idLista") int idLista,@RequestParam(value = "ciudad",required = false) String ciudad,
                                               @RequestParam(value = "sexo",required = false) String sexo,@RequestParam(value = "edadMin",required = false) String edadMin,
-                                              @RequestParam(value = "edadMax",required = false) String edadMax){
+                                              @RequestParam(value = "edadMax",required = false) String edadMax,@RequestParam(value = "idUsuario",required = false) int idU){
         List<ListaUsuarios> lista = this.listaUsuariosRepository.findListaUsuariosByIDlista(idLista);
         List<UsuarioDTO> listaU = null;
 
@@ -116,33 +118,66 @@ public class ListaCompradoresController {
             listaU = this.usuarioService.findBySexo(sexo);
         }
         if(!"".equals(ciudad) || ciudad == null){
-            if(listaU == null || !listaU.isEmpty()){
+            if(listaU == null || listaU.isEmpty()){
                 listaU = this.usuarioService.findByCiudad(ciudad);
+
             }else{
-                List<UsuarioDTO> nueva = this.usuarioService.findByCiudad(ciudad);
+                listaU = this.usuarioService.findByCiudadSexo(ciudad,sexo);
+                List<UsuarioDTO> nueva = this.usuarioService.findByCiudadSexo(ciudad,sexo);
                 listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
             }
         }
+
         if((!"".equals(edadMin) && !"".equals(edadMax))){ //||(edadMax == "" && edadMin == ""
-            if(listaU == null || !listaU.isEmpty()){
+            if(listaU == null || listaU.isEmpty()){
                 listaU = this.usuarioService.findByEdadMinMax(Integer.parseInt(edadMin), Integer.parseInt(edadMax));
             }else{
+                /*
+                if(!"".equals(sexo) || sexo == null){
+                    listaU = this.usuarioService.findByEdadMinMaxSex(Integer.parseInt(edadMin),Integer.parseInt(edadMax),sexo);
+                }else if(!"".equals(ciudad) || ciudad == null){
+                    listaU = this.usuarioService.findByEdadMinMaxCiudad(Integer.parseInt(edadMin),Integer.parseInt(edadMax),ciudad);
+                }else{
+                    listaU = this.usuarioService.findByEdadMinMaxSexoCiudad(Integer.parseInt(edadMin),Integer.parseInt(edadMax),sexo,ciudad);
+                }
+
+                 */
                 List<UsuarioDTO> nueva = this.usuarioService.findByEdadMinMax(Integer.parseInt(edadMin),Integer.parseInt(edadMax));
                 listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
             }
 
         }else if(!"".equals(edadMin)){ // || edadMin == ""
-            if(listaU == null || !listaU.isEmpty()){
+            if(listaU == null || listaU.isEmpty()){
                 listaU = this.usuarioService.findByEdadMin(Integer.parseInt(edadMin));
             }else{
+                /*
+                if(!"".equals(sexo) || sexo == null){
+                    listaU = this.usuarioService.findByEdadMinMaxSex(Integer.parseInt(edadMin),100,sexo);
+                }else if(!"".equals(ciudad) || ciudad == null){
+                    listaU = this.usuarioService.findByEdadMinMaxCiudad(Integer.parseInt(edadMin),100,ciudad);
+                }else{
+                    listaU = this.usuarioService.findByEdadMinMaxSexoCiudad(Integer.parseInt(edadMin),100,sexo,ciudad);
+                }
+
+                 */
                 List<UsuarioDTO> nueva = this.usuarioService.findByEdadMin(Integer.parseInt(edadMin));
                 listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
             }
 
         }else if(!"".equals(edadMax)){ // || edadMax == ""
-            if(listaU == null || !listaU.isEmpty()){
+            if(listaU == null || listaU.isEmpty()){
                 listaU =this.usuarioService.findByEdadMax(Integer.parseInt(edadMax));
             }else{
+                /*
+                if(!"".equals(sexo) || sexo == null){
+                    listaU = this.usuarioService.findByEdadMinMaxSex(0,Integer.parseInt(edadMax),sexo);
+                }else if(!"".equals(ciudad) || ciudad == null){
+                    listaU = this.usuarioService.findByEdadMinMaxCiudad(0,Integer.parseInt(edadMax),ciudad);
+                }else{
+                    listaU = this.usuarioService.findByEdadMinMaxSexoCiudad(0,Integer.parseInt(edadMax),sexo,ciudad);
+                }
+
+                 */
                 List<UsuarioDTO> nueva = this.usuarioService.findByEdadMax(Integer.parseInt(edadMax));
                 listaU.stream().filter(nueva :: contains).collect(Collectors.toList());
             }
@@ -156,18 +191,18 @@ public class ListaCompradoresController {
         }
 
 
-        return "redirect:/marketing/editar/"+idLista;
+        return "redirect:/marketing/editar/"+idLista+"/"+idU;
 
     }
 
-    @RequestMapping("/marketing/UsuarioListaBorrar/{id}/{u}")
-    public String borrarUsuarioLista(Model model, @PathVariable("id") int idLista,@PathVariable("u") int idUsuario){
+    @RequestMapping("/marketing/UsuarioListaBorrar/{id}/{u}/{m}")
+    public String borrarUsuarioLista(Model model, @PathVariable("id") int idLista,@PathVariable("u") int idUsuario,@PathVariable("m") int idM){
         List<ListaDTO> lista = this.listaService.listarListas();
         model.addAttribute("listas",lista);
 
         this.listaUsuariosService.borrarUsuarioLista(idLista,idUsuario);
 
-        return "redirect:/marketing/editar/"+idLista;
+        return "redirect:/marketing/editar/"+idLista+"/"+idM;
 
     }
 

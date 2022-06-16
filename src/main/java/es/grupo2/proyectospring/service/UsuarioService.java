@@ -51,6 +51,13 @@ public class UsuarioService {
 
     public List<UsuarioDTO> findByCiudad(String ciudad) {
         List<UsuarioDTO> listaDTO = usuarioEntityADTO(this.usuarioRepository.findByCiudad(ciudad));
+
+        return listaDTO;
+    }
+
+    public List<UsuarioDTO> findByCiudadSexo(String ciudad,String x) {
+        List<UsuarioDTO> listaDTO = usuarioEntityADTO(this.usuarioRepository.findByCiudadSexo(ciudad,x));
+
         return listaDTO;
     }
 
@@ -60,6 +67,26 @@ public class UsuarioService {
                 usuarioEntityADTO(this.usuarioRepository.findByEdadMinMax(min, max));
         return listaDTO;
     }
+/*
+    public List<UsuarioDTO> findByEdadMinMaxSex(int min,int max,String x) {
+        List<UsuarioDTO> listaDTO =
+                usuarioEntityADTO(this.usuarioRepository.findByEdadMinMaxSexo(min, max,x));
+        return listaDTO;
+    }
+
+    public List<UsuarioDTO> findByEdadMinMaxCiudad(int min,int max,String ciudad) {
+        List<UsuarioDTO> listaDTO =
+                usuarioEntityADTO(this.usuarioRepository.findByEdadMinMaxCiudad(min, max,ciudad));
+        return listaDTO;
+    }
+
+    public List<UsuarioDTO> findByEdadMinMaxSexoCiudad(int min,int max,String x,String ciudad) {
+        List<UsuarioDTO> listaDTO =
+                usuarioEntityADTO(this.usuarioRepository.findByEdadMinMaxSexoCiudad(min, max,x,ciudad));
+        return listaDTO;
+    }
+
+ */
 
     public List<UsuarioDTO> findByEdadMin(int min) {
         List<UsuarioDTO> listaDTO = usuarioEntityADTO(this.usuarioRepository.findByEdadMin(min));
