@@ -1,5 +1,7 @@
 package es.grupo2.proyectospring.entity;
 
+import es.grupo2.proyectospring.dto.VendedorDTO;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -55,5 +57,12 @@ public class Vendedor {
     @Override
     public int hashCode() {
         return Objects.hash(usuarioId);
+    }
+
+    public VendedorDTO toDTO() {
+        VendedorDTO vendedorDTO = new VendedorDTO();
+        vendedorDTO.setUsuarioId(this.usuarioId);
+        return vendedorDTO;
+
     }
 }

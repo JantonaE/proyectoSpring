@@ -14,12 +14,14 @@
 </head>
 <body>
     <form:form action="/vendedor/guardar" method="post"  modelAttribute="listaVentaDTO">
-        <form:input path="vendedorId"/>
+        <form:hidden path="vendedorId"/>
         Producto:
         <form:select path="producto">
             <form:options items="${productos}" itemLabel="titulo" itemValue="id" />
         </form:select>
-        Comprador: <form:input path="compradorId" />
+        Comprador: <form:select path="compradorId">
+            <form:options items="${compradores}" itemLabel="usuario.nombre" itemValue="usuarioId"/>
+        </form:select>
         PrecioPuja: <form:input path="preciopuja" />
         Fecha: <form:input path="fecha" />
         <form:button>Enviar</form:button>

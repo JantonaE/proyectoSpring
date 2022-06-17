@@ -37,8 +37,17 @@
 <form method="POST" action="/registrar">
     <table>
         <tr>
-            <td>¿Aún no estás registrado?</td>
+            <td>¿Aún no estás registrado como comprador?</td>
             <td><input type="submit" value="Registrar" /></td>
+        </tr>
+    </table>
+</form>
+<br/>
+<form method="POST" action="/registrarV">
+    <table>
+        <tr>
+            <td>¿Aún no estás registrado como Vendedor?</td>
+            <td><input type="submit" value="Registrar Vendedor" /></td>
         </tr>
     </table>
 </form>

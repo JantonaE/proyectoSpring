@@ -39,7 +39,8 @@
         </tr>
 
         <%
-            for(ListaVentaDTO lv: listaVentaDTOS){
+            if(!listaVentaDTOS.isEmpty()){
+                for(ListaVentaDTO lv: listaVentaDTOS){
         %>
 
         <tr>
@@ -61,6 +62,10 @@
             <td><%= lv.getPreciopuja()%></td>
             <td><a href="/vendedor/<%= lv.getVendedorId() %>/<%=lv.getProducto()%>/edit">editar</a> </td>
         </tr>
+        <%
+            }}else{
+        %>
+            <h1> NO HAY AÚN VENTAS </h1>
         <%
             }
         %>

@@ -27,7 +27,13 @@ public class CompradorController {
     private MarketingRepository marketingRepository;
 
     private UsuarioRepository usuarioRepository;
+    private VendedorRepository vendedorRepository;
     private List<ListaVentaDTO> listaVentaDTO =new ArrayList<>();
+
+    @Autowired
+    public void setVendedorRepository(VendedorRepository vendedorRepository) {
+        this.vendedorRepository = vendedorRepository;
+    }
 
     @Autowired
     public void setMarketingRepository(MarketingRepository marketingRepository) {
@@ -71,16 +77,21 @@ public class CompradorController {
                                   @RequestParam(value = "password",required = true) String password){
         String ruta="InicioSesion";
         Usuario u = usuarioRepository.findByNombreUsuarioPass(usuario,password);
+        if(u == null) return "Registrar";
         UsuarioDTO usuarioDTO=u.toDTO();
         int idUser = u.getId();
         System.out.println("llega1");
         MarketingDTO marketingDTO = this.marketingRepository.findById(idUser).orElse(null).toDTO();
+        VendedorDTO vendedorDTO = this.vendedorRepository.findById(idUser).orElse(null).toDTO();
         System.out.println("llega2:"+!marketingDTO.equals(null));
+
         if(!marketingDTO.equals(null)){
             System.out.println("entra");
             ruta="redirect:/marketing/"+marketingDTO.getUsuarioId();
         }else if(usuario.equals("admin") && password.equals("admin")) {
             ruta="redirect:/administrador";
+        }else if(!vendedorDTO.equals(null)){
+            ruta="redirect:/vendedor/"+vendedorDTO.getUsuarioId();
         }else if(usuarioDTO!=null){
             System.out.println("resto");
             ruta="redirect:/comprador/"+usuarioDTO.getId().intValue()+"/false";
