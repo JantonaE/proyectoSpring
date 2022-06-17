@@ -2,10 +2,7 @@ package es.grupo2.proyectospring.controller;
 
 
 //import com.sun.org.apache.xpath.internal.operations.Bool;
-import es.grupo2.proyectospring.dto.CompradorDTO;
-import es.grupo2.proyectospring.dto.ListaVentaDTO;
-import es.grupo2.proyectospring.dto.ProductoDTO;
-import es.grupo2.proyectospring.dto.UsuarioDTO;
+import es.grupo2.proyectospring.dto.*;
 import es.grupo2.proyectospring.entity.*;
 import es.grupo2.proyectospring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,13 +73,16 @@ public class CompradorController {
         Usuario u = usuarioRepository.findByNombreUsuarioPass(usuario,password);
         UsuarioDTO usuarioDTO=u.toDTO();
         int idUser = u.getId();
-
-        Marketing marketing = this.marketingRepository.findById(idUser).orElse(null);
-        if(marketing != null){
-            ruta="redirect:/marketing/"+marketing.getUsuarioId();
-        }if(usuario.equals("admin") && password.equals("admin")) {
+        System.out.println("llega1");
+        MarketingDTO marketingDTO = this.marketingRepository.findById(idUser).orElse(null).toDTO();
+        System.out.println("llega2:"+!marketingDTO.equals(null));
+        if(!marketingDTO.equals(null)){
+            System.out.println("entra");
+            ruta="redirect:/marketing/"+marketingDTO.getUsuarioId();
+        }else if(usuario.equals("admin") && password.equals("admin")) {
             ruta="redirect:/administrador";
         }else if(usuarioDTO!=null){
+            System.out.println("resto");
             ruta="redirect:/comprador/"+usuarioDTO.getId().intValue()+"/false";
         }
 
