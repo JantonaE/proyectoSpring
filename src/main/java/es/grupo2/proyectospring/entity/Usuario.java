@@ -125,6 +125,7 @@ public class Usuario {
         dto.setDomicilio(domicilio);
         dto.setEdad(edad);
         dto.setId(Long.valueOf(id));
+        dto.setContraseña(contraseña);
         //dto.setListaList(listaEntityADTO(listaList));
         //dto.setMarketing(marketing.toDTO());
         dto.setNombre(nombre);

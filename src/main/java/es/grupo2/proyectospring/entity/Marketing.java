@@ -12,7 +12,7 @@ import java.util.Objects;
 */
 @Entity
 public class Marketing {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
     @Column(name = "usuario_id", nullable = false)
     private Integer usuarioId;

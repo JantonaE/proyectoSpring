@@ -47,4 +47,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query ("select u from Usuario u where u.nombre like :nombre and u.contraseña like :pass")
     public Usuario findByNombreUsuarioPass(String nombre,String pass);
 
+    public List<Usuario> findByNombre(String nombre);
+
 }

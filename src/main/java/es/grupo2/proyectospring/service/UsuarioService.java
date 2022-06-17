@@ -150,6 +150,43 @@ public class UsuarioService {
         this.usuarioRepository.save(u);
     }
 
+    public List<UsuarioDTO> listarUsuarios (String filtroNombre) {
+        List<Usuario> lista;
+
+        if ((filtroNombre != null && filtroNombre.length()>0 )) {
+            lista = this.usuarioRepository.findByNombre(filtroNombre);
+        } else {  // Quiero mostrar todos
+            lista = this.usuarioRepository.findAll();
+        }
+        return this.convertirAListaDTO(lista);
+    }
+
+    protected List<UsuarioDTO> convertirAListaDTO (List<Usuario> lista){
+        if (lista != null) {
+            List<UsuarioDTO> listaDTO = new ArrayList<UsuarioDTO>();
+            for (Usuario usuario:lista) {
+                listaDTO.add(usuario.toDTO());
+            }
+            return listaDTO;
+        } else {
+            return null;
+        }
+    }
+
+    public void guardarUsuario(UsuarioDTO dto){
+        Usuario us= new Usuario();
+        us.setApellidos(dto.getApellidos());
+        us.setCiudad(dto.getCiudad());
+        us.setContraseña(dto.getContraseña());
+        us.setDomicilio(dto.getDomicilio());
+        us.setEdad(dto.getEdad());
+        if(dto.getId()!=null) {
+            us.setId(dto.getId().intValue());
+        }
+        us.setNombre(dto.getNombre());
+        us.setSexo(dto.getSexo());
+        this.usuarioRepository.save(us);
+    }
 
 
 }

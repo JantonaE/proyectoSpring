@@ -37,4 +37,59 @@ public class ProductoService {
 
         return productoDTOS;
     }
+
+    protected List<ProductoDTO> convertirAListaDTO (List<Producto> lista){
+        if (lista != null) {
+            List<ProductoDTO> listaDTO = new ArrayList<ProductoDTO>();
+            for (Producto pr:lista) {
+                listaDTO.add(pr.toDTO());
+            }
+            return listaDTO;
+        } else {
+            return null;
+        }
+    }
+
+    public List<ProductoDTO> listarProductos (String filtroNombre) {
+        List<Producto> lista;
+
+        if ((filtroNombre != null && filtroNombre.length()>0 )) {
+            lista = this.productoRepository.findByTitulo(filtroNombre);
+        } else {  // Quiero mostrar todos
+            lista = this.productoRepository.findAll();
+        }
+        return this.convertirAListaDTO(lista);
+    }
+
+    public List<ProductoDTO> listarProductosVacio () {
+        return this.listarProductos(null);
+    }
+
+    public void borrarProducto (Integer id) {
+        Producto pr = this.productoRepository.findById(id).orElse(null);
+        this.productoRepository.delete(pr);
+    }
+
+    public ProductoDTO buscarProducto (Integer id) {
+        Producto pr = this.productoRepository.findById(id).orElse(null);
+        if (pr != null) {
+            return pr.toDTO();
+        } else {
+            return null;
+        }
+    }
+
+    public void guardarProducto(ProductoDTO dto){
+        Producto us= new Producto();
+        us.setId(dto.getId());
+        us.setCategoriaProducto(dto.getCategoriaProducto());
+        us.setDescripcion(dto.getDescripcion());
+        us.setPrecioSalida(dto.getPrecioSalida());
+        us.setTitulo(dto.getTitulo());
+        us.setUrlFoto(dto.getUrlFoto());
+        this.productoRepository.save(us);
+    }
+
+
+
 }

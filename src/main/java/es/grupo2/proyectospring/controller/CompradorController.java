@@ -1,6 +1,7 @@
 package es.grupo2.proyectospring.controller;
 
 
+//import com.sun.org.apache.xpath.internal.operations.Bool;
 import es.grupo2.proyectospring.dto.CompradorDTO;
 import es.grupo2.proyectospring.dto.ListaVentaDTO;
 import es.grupo2.proyectospring.dto.ProductoDTO;
@@ -75,15 +76,12 @@ public class CompradorController {
         Usuario u = usuarioRepository.findByNombreUsuarioPass(usuario,password);
         UsuarioDTO usuarioDTO=u.toDTO();
         int idUser = u.getId();
-        /*
-        if(usuarioDTO!=null){
-            ruta="redirect:/comprador/"+usuarioDTO.getId().intValue();
-        }
 
-         */
         Marketing marketing = this.marketingRepository.findById(idUser).orElse(null);
         if(marketing != null){
             ruta="redirect:/marketing/"+marketing.getUsuarioId();
+        }if(usuario.equals("admin") && password.equals("admin")) {
+            ruta="redirect:/administrador";
         }else if(usuarioDTO!=null){
             ruta="redirect:/comprador/"+usuarioDTO.getId().intValue()+"/false";
         }
@@ -120,14 +118,15 @@ public class CompradorController {
         usuarioDTO.setContraseña(password);
         usuarioRepository.save(usuarioDTO.toNormal());
 
-       /* Usuario u= usuarioRepository.findByNombreUsuario(nombre);
-        usuarioDTO.setId(u.getId().longValue());
+        //Usuario u= usuarioRepository.findByNombreUsuario(nombre);
+        Usuario u=usuarioDTO.toNormal();
         CompradorDTO compradorDTO=new CompradorDTO();
-        compradorDTO.setUsuario(usuarioDTO.toNormal());
         compradorDTO.setCategoriaPreferida(cat);
         compradorDTO.setUsuarioId(u.getId());
+        u.setComprador(compradorDTO.toNormal());
+        compradorDTO.setUsuario(usuarioDTO.toNormal());
         compradorRepository.save(compradorDTO.toNormal());
-*/
+
         return "InicioSesion";
     }
 
@@ -149,29 +148,29 @@ public class CompradorController {
         return "Favoritos";
     }
 
-    @RequestMapping("comprador/AnadirFavorito/comprador/{idc}/Productoid/{idp}")
-    public String doAnadirFavorito(Model model,@PathVariable("idc") int idc, @PathVariable("idp") int idp){
+    @RequestMapping("AnadirFavorito/comprador/{idc}/Productoid/{idp}/{filtro}")
+    public String doAnadirFavorito(Model model,@PathVariable("idc") int idc, @PathVariable("idp") int idp,@PathVariable("filtro") Boolean filtro){
 
         FavoritosComprador fav=new FavoritosComprador();
         fav.setCompradorId(idc);
         fav.setProductoId(idp);
         favoritosRepository.save(fav);
-        String res="redirect:/comprador/"+idc;
+        String res="redirect:/comprador/"+idc+"/"+filtro;
         return res;
     }
 
-    @RequestMapping("Favoritos/EliminarFavorito/comprador/{idc}/Productoid/{idp}")
-    public String doEliminarFavorito(Model model,@PathVariable("idc") int idc, @PathVariable("idp") int idp){
+    @RequestMapping("EliminarFavorito/comprador/{idc}/Productoid/{idp}/{filtro}")
+    public String doEliminarFavorito(Model model,@PathVariable("idc") int idc, @PathVariable("idp") int idp,@PathVariable("filtro") Boolean filtro){
 
         FavoritosComprador fav=this.favoritosRepository.findByIDC(idc,idp);
         favoritosRepository.delete(fav);
-        String res="redirect:/Favoritos/"+idc;
+        String res="redirect:/Favoritos/"+idc+"/"+filtro;
         return res;
     }
 
 
-    @RequestMapping("/Puja/comprador/{idc}/Productoid/{idp}")
-    public String doPujar(Model model, @PathVariable("idc") int idc, @PathVariable("idp") int idp, @RequestParam(value = "puja",required = false) double puja){
+    @RequestMapping("/Puja/comprador/{idc}/Productoid/{idp}/{filtro}")
+    public String doPujar(Model model, @PathVariable("idc") int idc, @PathVariable("idp") int idp, @PathVariable("filtro")Boolean filtro, @RequestParam(value = "puja",required = false) double puja){
 
         ListaVenta lv=listaVentaRepository.findListaVentaByProductoId(idp);
         double preciopuja= lv.getPreciopuja();
@@ -179,7 +178,7 @@ public class CompradorController {
             lv.setPreciopuja(puja);
             listaVentaRepository.save(lv);
         }
-        String res="redirect:/comprador/"+idc;
+        String res="redirect:/comprador/"+idc+"/"+filtro;
         return res;
     }
 

@@ -1,5 +1,7 @@
 package es.grupo2.proyectospring.entity;
 
+import es.grupo2.proyectospring.dto.CategoriaDTO;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -52,4 +54,10 @@ public class Categoria {
     public int hashCode() {
         return Objects.hash(id, titulo, descripcion);
     }
+
+    public CategoriaDTO toDTO(){
+        CategoriaDTO ca = new CategoriaDTO(id, titulo, descripcion);
+        return ca;
+    }
+
 }

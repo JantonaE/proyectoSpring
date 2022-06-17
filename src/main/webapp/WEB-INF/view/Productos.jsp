@@ -110,7 +110,7 @@
 
             %>
 
-            <form  method="POST" action="/Puja/comprador/<%=comprador.getUsuarioId() %>/Productoid/<%=lv.getProducto1().getId() %>">
+            <form  method="POST" action="/Puja/comprador/<%=comprador.getUsuarioId() %>/Productoid/<%=lv.getProducto1().getId() %>/<%=filtro%>">
                 <td><input type="text" id="puja" name="puja"> </td>
                 <td><input type="submit" value="Pujar"></td>
 
@@ -118,7 +118,7 @@
             <%
                 if(!checkFavorito){
             %>
-            <td><a href="AnadirFavorito/comprador/<%=comprador.getUsuarioId()%>/Productoid/<%= lv.getProducto1().getId() %>">Favorito</a></td>
+            <td><a href="/AnadirFavorito/comprador/<%=comprador.getUsuarioId()%>/Productoid/<%= lv.getProducto1().getId() %>/<%=filtro%>">Favorito</a></td>
             <%
                 }
             %>

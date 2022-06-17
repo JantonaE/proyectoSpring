@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 public class Analista {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
     @Column(name = "usuario_id", nullable = false)
     private Integer usuarioId;
