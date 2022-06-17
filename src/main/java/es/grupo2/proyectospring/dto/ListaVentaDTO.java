@@ -1,9 +1,6 @@
 package es.grupo2.proyectospring.dto;
 
-import es.grupo2.proyectospring.entity.Comprador;
-import es.grupo2.proyectospring.entity.Producto;
-import es.grupo2.proyectospring.entity.Usuario;
-import es.grupo2.proyectospring.entity.Vendedor;
+import es.grupo2.proyectospring.entity.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -88,5 +85,18 @@ public class ListaVentaDTO {
     }
 
 
+    public ListaVenta toNormal(){
+        ListaVenta l=new ListaVenta();
+        l.setVendedorId(this.vendedorId);
+        l.setVendedor(this.vendedor);
+        l.setComprador(this.comprador);
+        l.setPreciopuja(this.preciopuja);
+        l.setCompradorId(this.compradorId);
+        l.setFecha(this.fecha);
+        l.setProducto(this.producto);
+        l.setProducto1(this.producto1);
+
+        return l;
+    }
 
 }

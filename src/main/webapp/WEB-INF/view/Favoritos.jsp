@@ -18,12 +18,13 @@
 
 <%
     CompradorDTO c = (CompradorDTO)request.getAttribute("comprador");
-
+    Boolean filtro= (Boolean) request.getAttribute("filtro");
     List<ProductoDTO> favoritos = (List) request.getAttribute("favoritos");
+    String direction=c.getUsuarioId()+"/"+filtro;
     if (favoritos == null || favoritos.isEmpty() ) {
 %>
 <h2>No hay favoritos</h2>
-<form method="POST" action="/comprador/<%=c.getUsuarioId()%>">
+<form method="POST" action="/comprador/<%=direction%>">
     <input type="submit" value="Atrás">
 </form>
 <%
@@ -71,7 +72,8 @@
         }
     %>
 </table>
-<form method="POST" action="/comprador/<%=c.getUsuarioId()%>">
+
+<form method="POST" action=<%=direction%>>
     <input type="submit" value="Atrás">
 </form>
 <%

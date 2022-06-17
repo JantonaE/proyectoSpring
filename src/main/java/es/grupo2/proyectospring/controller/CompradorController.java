@@ -29,6 +29,7 @@ public class CompradorController {
     private MarketingRepository marketingRepository;
 
     private UsuarioRepository usuarioRepository;
+    private List<ListaVentaDTO> listaVentaDTO =new ArrayList<>();
 
     @Autowired
     public void setMarketingRepository(MarketingRepository marketingRepository) {
@@ -61,33 +62,6 @@ public class CompradorController {
     }
 
 
-
-    @RequestMapping("/comprador/{id}")
-    public String doMostrarProductosComprador(Model model, @PathVariable("id") int id){
-
-        List<ListaVenta> listaVentaList = this.listaVentaRepository.findAll();
-        List<ListaVentaDTO> listaVenta=new ArrayList<>();
-        for(ListaVenta lv : listaVentaList){
-            listaVenta.add(lv.toDTO());
-        }
-        Comprador c=this.compradorRepository.findByIDComprador(id);
-        CompradorDTO comprador=c.toDTO();
-
-        List<FavoritosComprador> f=this.favoritosRepository.favoritos(id);
-        List<ProductoDTO> favoritos=new ArrayList<>();
-        for(FavoritosComprador fv: f){
-            int i=fv.getProductoId();
-            Producto p= this.productoRepository.findByIdP(i);
-            ProductoDTO pdto=p.toDTO();
-            favoritos.add(pdto);
-        }
-        model.addAttribute("favoritos",favoritos);
-        model.addAttribute("comprador",comprador);
-        model.addAttribute("listaVentaDTO", listaVenta);
-        return "Productos";
-
-    }
-
     @RequestMapping("/inicioSesion")
     public String doMain(Model model){
 
@@ -111,7 +85,7 @@ public class CompradorController {
         if(marketing != null){
             ruta="redirect:/marketing/"+marketing.getUsuarioId();
         }else if(usuarioDTO!=null){
-            ruta="redirect:/comprador/"+usuarioDTO.getId().intValue();
+            ruta="redirect:/comprador/"+usuarioDTO.getId().intValue()+"/false";
         }
 
        // System.out.println("Ruta:"+ruta);
@@ -157,8 +131,8 @@ public class CompradorController {
         return "InicioSesion";
     }
 
-    @RequestMapping("/Favoritos/{id}")
-    public String doFavoritos(Model model, @PathVariable("id") int id){
+    @RequestMapping("/Favoritos/{id}/{filtro}")
+    public String doFavoritos(Model model, @PathVariable("id") int id,@PathVariable("filtro") Boolean filtro){
         Comprador c=this.compradorRepository.findByIDComprador(id);
         CompradorDTO comprador=c.toDTO();
         List<FavoritosComprador> f=this.favoritosRepository.favoritos(id);
@@ -169,6 +143,7 @@ public class CompradorController {
             ProductoDTO pdto=p.toDTO();
             favoritos.add(pdto);
         }
+        model.addAttribute("filtro",filtro);
         model.addAttribute("favoritos",favoritos);
         model.addAttribute("comprador",comprador);
         return "Favoritos";
@@ -208,13 +183,132 @@ public class CompradorController {
         return res;
     }
 
-    @RequestMapping("Filtro/{idc}")
-    public String doFiltro(Model model,@PathVariable("idc") int idc){
+    @RequestMapping("Filtrar/{idc}")
+    public String doFiltro(Model model,@PathVariable("idc") int idc,
+                           @RequestParam(value = "tituloF",required = false) String tituloF,
+                           @RequestParam(value = "descF",required = false) String descF,
+                           @RequestParam(value = "precioF",required = false) String precioF,
+                           @RequestParam(value = "categoriaF",required = false) String categoriaF){
 
 
-        boolean filtro=true;
-        String res="redirect:/comprador/"+idc;
+        Boolean filtro=false;
+        if(categoriaF.equals(null)){
+            categoriaF="";
+        }
+        if(tituloF.equals("") && descF.equals("") && precioF.equals("") && categoriaF.equals("")){
+            List<ListaVenta> listaVentaList = this.listaVentaRepository.findAll();
+            List<ListaVentaDTO> listaVenta=new ArrayList<>();
+            for(ListaVenta lv : listaVentaList){
+                listaVenta.add(lv.toDTO());
+            }
+            model.addAttribute("listaVentaDTO", listaVenta);
+            listaVentaDTO=listaVenta;
+        }
+        if(!tituloF.equals("")){
+            List<ListaVenta> listaVentaList=this.listaVentaRepository.findByNombre(tituloF);
+            List<ListaVentaDTO> listaVenta=new ArrayList<>();
+            for(ListaVenta lv : listaVentaList){
+                listaVenta.add(lv.toDTO());
+            }
+            filtro=true;
+            model.addAttribute("filtro",filtro);
+            model.addAttribute("listaVentaDTO", listaVenta);
+            listaVentaDTO=listaVenta;
+        }
+
+        if(!descF.equals("")){
+            List<ListaVenta>  listaVentaList=this.listaVentaRepository.findByDescripcion(descF);
+            List<ListaVentaDTO> listaVenta=new ArrayList<>();
+            for(ListaVenta lv : listaVentaList){
+                listaVenta.add(lv.toDTO());
+            }
+            filtro=true;
+            model.addAttribute("filtro",filtro);
+            model.addAttribute("listaVentaDTO", listaVenta);
+            listaVentaDTO=listaVenta;
+        }
+
+        if(!precioF.equals("")){
+            List<ListaVenta>  listaVentaList=this.listaVentaRepository.findByPrecio(Double.parseDouble(precioF));
+            List<ListaVentaDTO> listaVenta=new ArrayList<>();
+            for(ListaVenta lv : listaVentaList){
+                listaVenta.add(lv.toDTO());
+            }
+            filtro=true;
+            model.addAttribute("filtro",filtro);
+            model.addAttribute("listaVentaDTO", listaVenta);
+            listaVentaDTO=listaVenta;
+        }
+
+        if(!categoriaF.equals("")){
+            int res;
+            if(categoriaF.equals("Ocio")){
+                res=1;
+            }else if(categoriaF.equals("Deportes")){
+                res=2;
+            }else if(categoriaF.equals("Ropa")){
+                res=3;
+            }else if(categoriaF.equals("Muebles")){
+                res=4;
+            }else{
+                res=5;
+            }
+            List<ListaVenta>  listaVentaList=this.listaVentaRepository.findByCategoria(res);
+            List<ListaVentaDTO> listaVenta=new ArrayList<>();
+            for(ListaVenta lv : listaVentaList){
+                listaVenta.add(lv.toDTO());
+            }
+            filtro=true;
+            model.addAttribute("filtro",filtro);
+            model.addAttribute("listaVentaDTO", listaVenta);
+            listaVentaDTO=listaVenta;
+        }
+
+
+
+        String res="redirect:/comprador/"+idc+"/"+filtro;
         return res;
+    }
+
+    @RequestMapping("/comprador/{id}/{filtro}")
+    public String doMostrarProductosComprador(Model model, @PathVariable("id") int id,@PathVariable("filtro") Boolean filtro){
+
+        List<ListaVenta> listaVentaList = new ArrayList<>();
+        //Boolean filtro= (Boolean) model.getAttribute("filtro");
+        if(filtro==null){
+            filtro=false;
+        }
+        if(!filtro) {
+            listaVentaList = this.listaVentaRepository.findAll();
+            /*for(ListaVenta l:listaVentaList){
+                listaVentaDTO.add(l.toDTO());
+            }*/
+        }else{
+            for(ListaVentaDTO l :listaVentaDTO){
+                listaVentaList.add(l.toNormal());
+            }
+
+        }
+        List<ListaVentaDTO> listaVenta=new ArrayList<>();
+        for(ListaVenta lv : listaVentaList){
+            listaVenta.add(lv.toDTO());
+        }
+        Comprador c=this.compradorRepository.findByIDComprador(id);
+        CompradorDTO comprador=c.toDTO();
+
+        List<FavoritosComprador> f=this.favoritosRepository.favoritos(id);
+        List<ProductoDTO> favoritos=new ArrayList<>();
+        for(FavoritosComprador fv: f){
+            int i=fv.getProductoId();
+            Producto p= this.productoRepository.findByIdP(i);
+            ProductoDTO pdto=p.toDTO();
+            favoritos.add(pdto);
+        }
+        model.addAttribute("favoritos",favoritos);
+        model.addAttribute("comprador",comprador);
+        model.addAttribute("listaVentaDTO", listaVenta);
+        return "Productos";
+
     }
 
 }

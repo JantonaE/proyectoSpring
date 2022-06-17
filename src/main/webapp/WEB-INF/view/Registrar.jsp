@@ -81,13 +81,14 @@
     <td><label>La contraseña debe contener como mínimo 8 carácteres, almenos una mayúscula, minúscula y un número.</label></td>
 
     </tr>
-  <form method="post" action="/inicioSesion">
-    <td><input type="submit" value="Cancelar" /></td>
-  </form>
+
     <td><input type="submit" value="Registrar" /></td>
     </tr>
   </table>
   </p>
+</form>
+<form method="post" action="/inicioSesion">
+  <td><input type="submit" value="Cancelar" /></td>
 </form>
 </body>
 </html>

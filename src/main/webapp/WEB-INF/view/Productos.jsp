@@ -23,6 +23,7 @@
     <%
 
         List<ListaVentaDTO> listaVenta= (List) request.getAttribute("listaVentaDTO");
+        Boolean filtro= (Boolean) request.getAttribute("filtro");
         CompradorDTO comprador= (CompradorDTO) request.getAttribute("comprador");
 
     %>
@@ -34,7 +35,7 @@
     <%
     } else {
     %>
-    <form method="post" action="Filtrar/<%=comprador.getUsuarioId()%>">
+    <form method="post" action="/Filtrar/<%=comprador.getUsuarioId()%>">
         <label>Título:</label>
         <input type="text" id="tituloF" name="tituloF">
         <label>Descripción:</label>
@@ -45,9 +46,11 @@
         <select id="categoriaF" name="categoriaF">
             <option disabled selected="Seleccione categoría..."></option>
             <option>Ocio</option>
+            <option>Deportes</option>
             <option>Ropa</option>
-            <option>Tecnología</option>
-            <option>Decoración</option>
+            <option>Muebles</option>
+            <option>Otros</option>
+            <option> </option>
         </select>
         <input type="submit" value="Filtrar">
     </form>
@@ -128,7 +131,7 @@
         %>
     </table>
 
-    <form method="POST" action="/Favoritos/<%=comprador.getUsuarioId()%>">
+    <form method="POST" action="/Favoritos/<%=comprador.getUsuarioId()%>/<%=filtro%>">
         <input type="submit" value="Favoritos" >
     </form>
 
