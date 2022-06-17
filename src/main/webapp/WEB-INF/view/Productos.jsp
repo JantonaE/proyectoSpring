@@ -134,6 +134,12 @@
     <form method="POST" action="/Favoritos/<%=comprador.getUsuarioId()%>/<%=filtro%>">
         <input type="submit" value="Favoritos" >
     </form>
+<%
+    String ruta="comprador/"+comprador.getUsuarioId()+"/"+filtro;
+%>
+    <form method="POST" action="/bandeja/<%=comprador.getUsuarioId()%>/<%=ruta%>">
+        <input type="submit" value="Mensajes" >
+    </form>
 
     <form method="POST" action="/inicioSesion">
         <input type="submit" value="Salir" >
