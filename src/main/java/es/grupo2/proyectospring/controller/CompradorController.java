@@ -80,20 +80,20 @@ public class CompradorController {
         if(u == null) return "Registrar";
         UsuarioDTO usuarioDTO=u.toDTO();
         int idUser = u.getId();
-        System.out.println("llega1");
+        VendedorDTO vendedorDTO = null;
         MarketingDTO marketingDTO = this.marketingRepository.findById(idUser).orElse(null).toDTO();
-        VendedorDTO vendedorDTO = this.vendedorRepository.findById(idUser).orElse(null).toDTO();
-        System.out.println("llega2:"+!marketingDTO.equals(null));
+        if(marketingDTO.equals(null)){
+            vendedorDTO = this.vendedorRepository.findById(idUser).orElse(null).toDTO();
+        }
+
 
         if(!marketingDTO.equals(null)){
-            System.out.println("entra");
             ruta="redirect:/marketing/"+marketingDTO.getUsuarioId();
         }else if(usuario.equals("admin") && password.equals("admin")) {
             ruta="redirect:/administrador";
         }else if(!vendedorDTO.equals(null)){
             ruta="redirect:/vendedor/"+vendedorDTO.getUsuarioId();
         }else if(usuarioDTO!=null){
-            System.out.println("resto");
             ruta="redirect:/comprador/"+usuarioDTO.getId().intValue()+"/false";
         }
 
