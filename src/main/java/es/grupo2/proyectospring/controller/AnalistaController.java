@@ -4,11 +4,7 @@ import es.grupo2.proyectospring.dto.AnalisisDTO;
 import es.grupo2.proyectospring.dto.AnalistaDTO;
 import es.grupo2.proyectospring.dto.BusquedaDTO;
 import es.grupo2.proyectospring.dto.UsuarioDTO;
-import es.grupo2.proyectospring.entity.Analisis;
 import es.grupo2.proyectospring.entity.Analista;
-import es.grupo2.proyectospring.entity.Usuario;
-import es.grupo2.proyectospring.repository.AnalisisRepository;
-import es.grupo2.proyectospring.repository.AnalistaRepository;
 import es.grupo2.proyectospring.service.AnalisisService;
 import es.grupo2.proyectospring.service.AnalistaService;
 import es.grupo2.proyectospring.service.UsuarioService;
@@ -19,9 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import java.util.ArrayList;
 import java.util.List;
+
+//Antonio Sepúlveda Zorrilla
 
 @Controller
 public class AnalistaController {

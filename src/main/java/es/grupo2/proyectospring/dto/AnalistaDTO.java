@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author ruben
+ * @author ruben y Antonio Sepúlveda Zorrilla
  */
 public class AnalistaDTO {
     private Integer usuarioId;

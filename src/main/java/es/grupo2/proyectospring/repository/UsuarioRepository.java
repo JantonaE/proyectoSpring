@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 /*
-    AUTHOR: Jesús Antona Espejo
+    AUTHOR: Jesús Antona Espejo y Antonio Sepúlveda Zorrilla(10%)
 */
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {

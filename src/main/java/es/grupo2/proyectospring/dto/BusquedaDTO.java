@@ -1,6 +1,10 @@
 package es.grupo2.proyectospring.dto;
 
-import java.util.List;
+
+/**
+ *
+ * @author Antonio Sepúlveda Zorrilla
+ */
 
 public class BusquedaDTO {
     private String idAnalisis;

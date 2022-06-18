@@ -4,7 +4,7 @@
 <%@ page import="es.grupo2.proyectospring.dto.BusquedaDTO" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
-  User: anton
+  User: Antonio Sepúlveda Zorrilla
   Date: 10/06/2022
   Time: 16:37
   To change this template use File | Settings | File Templates.

@@ -6,7 +6,7 @@
 package es.grupo2.proyectospring.dto;
 /**
  *
- * @author anton
+ * @author Antonio Sepúlveda Zorrilla
  */
 
 public class AnalisisDTO{
