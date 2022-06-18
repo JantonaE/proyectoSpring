@@ -7,6 +7,7 @@ package es.grupo2.proyectospring.service;/*
     AUTHOR: Jesús Antona Espejo
 */
 
+import es.grupo2.proyectospring.dto.BusquedaDTO;
 import es.grupo2.proyectospring.entity.*;
 import es.grupo2.proyectospring.repository.*;
 
@@ -109,6 +110,24 @@ public class UsuarioService {
         this.usuarioRepository.delete(u);
     }
 
+    public List<UsuarioDTO> findByFiltros(BusquedaDTO busquedaDTO){
+        List<Usuario> lista = null;
+        if(busquedaDTO.getOrden().equals("-")){
+            lista = usuarioRepository.findByFiltros(busquedaDTO.getNombre(), busquedaDTO.getApellidos(), busquedaDTO.getDomicilio(), busquedaDTO.getCiudad(), busquedaDTO.getEdad(),
+                    "M");
+        }
+        if (busquedaDTO.getOrden().equals("apellidosASC")) {
+            lista = usuarioRepository.findByFiltrosASC(busquedaDTO.getNombre(), busquedaDTO.getApellidos(), busquedaDTO.getDomicilio(), busquedaDTO.getCiudad(), busquedaDTO.getEdad(),
+                    "M");
+        }
+        if (busquedaDTO.getOrden().equals("apellidosDESC")) {
+            lista = usuarioRepository.findByFiltrosDESC(busquedaDTO.getNombre(), busquedaDTO.getApellidos(), busquedaDTO.getDomicilio(), busquedaDTO.getCiudad(), busquedaDTO.getEdad(),
+                    "M");
+        }
+
+        return this.usuarioEntityADTO(lista);
+
+    }
 
     private void rellenarUsuario (Usuario u, String nombre, String apellidos, String domicilio, String ciudad,
                                   int edad, List<Lista> listaList, Marketing marketing, Administrador administrador,
@@ -188,6 +207,17 @@ public class UsuarioService {
         this.usuarioRepository.save(us);
     }
 
+    public Integer numeroVentas(Integer id){
+        return usuarioRepository.listVentas(id).size();
+    }
+
+    public Double ingresosGenerados(Integer id){
+        List<Double> lista = usuarioRepository.ingresosGenerados(id);
+        if(lista.size()==0 || lista.get(0)==null){
+            return 0.0;
+        }
+        return lista.get(0);
+    }
 
 }
 

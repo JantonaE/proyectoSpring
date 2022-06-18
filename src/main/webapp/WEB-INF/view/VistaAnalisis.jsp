@@ -40,7 +40,7 @@
     %>
     <tr>
         <td><%= analisis.get(i).getNombre() %></td>
-        <td><a href="/analista/<%=analista.getUsuarioId()%>/ver/<%=analisis.get(i).getId()%>">Ver/Editar</a></td>
+        <td><a href="/analista/ver/<%=analisis.get(i).getId()%>">Ver/Editar</a></td>
         <td><a href="/analista/<%=analista.getUsuarioId()%>/copiar/<%=analisis.get(i).getId()%>">Copiar</a></td>
         <td><a href="/analista/<%=analista.getUsuarioId()%>/borrar/<%=analisis.get(i).getId()%>">Borrar</a></td>
     </tr>

@@ -11,10 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-<%
-    Usuario user = (Usuario) request.getAttribute("user");
-%>
-
-<h1><%=user.getNombre() %></h1>
+<h1>Prueba</h1>
 </body>
 </html>
